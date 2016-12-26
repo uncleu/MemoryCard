@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cards name="family">
+    <description>
+        la famille
+    </description>
+    <card id="1">
+        <txtquestion>la grand mère</txtquestion>
+        <txtanswer>grandmother</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="2">
+        <txtquestion>le grand père</txtquestion>
+        <txtanswer>grandfather</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="3">
+        <txtquestion>l'oncle</txtquestion>
+        <txtanswer>uncle</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="4">
+        <txtquestion>la tante</txtquestion>
+        <txtanswer>aunt</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="5">
+        <txtquestion>le père</txtquestion>
+        <txtanswer>father</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="6">
+        <txtquestion>la mère</txtquestion>
+        <txtanswer>mother</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="7">
+        <txtquestion>le cousin</txtquestion>
+        <txtanswer>le frère</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="8">
+        <txtquestion>la sœur</txtquestion>
+        <txtanswer>sister</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="9">
+        <txtquestion>la femme</txtquestion>
+        <txtanswer>wife</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="10">
+        <txtquestion>la belle-fille</txtquestion>
+        <txtanswer>daughter-in-law</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="11">
+        <txtquestion>le fils</txtquestion>
+        <txtanswer>son</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="12">
+        <txtquestion>la fille</txtquestion>
+        <txtanswer>daughter</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="13">
+        <txtquestion>le gendre</txtquestion>
+        <txtanswer>son-in-law</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="14">
+        <txtquestion>le petit-fils</txtquestion>
+        <txtanswer>grandson</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="15">
+        <txtquestion>la petite-fille</txtquestion>
+        <txtanswer>granddaughter</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+</cards>

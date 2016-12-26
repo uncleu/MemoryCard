@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cards name="food">
+    <description>
+        la nourriture
+    </description>
+    <card id="1">
+        <txtquestion>la viande</txtquestion>
+        <txtanswer>meat</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="2">
+        <txtquestion>le poisson</txtquestion>
+        <txtanswer>fish</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="3">
+        <txtquestion>les légume</txtquestion>
+        <txtanswer>vegetables</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="4">
+        <txtquestion>le fruit</txtquestion>
+        <txtanswer>fruit</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="5">
+        <txtquestion>les gâteaux</txtquestion>
+        <txtanswer>cakes</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="6">
+        <txtquestion>les desserts</txtquestion>
+        <txtanswer>desserts</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="7">
+        <txtquestion>la charcuterie</txtquestion>
+        <txtanswer>delicatessen</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="8">
+        <txtquestion>des boissons</txtquestion>
+        <txtanswer>drinks</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+    <card id="9">
+        <txtquestion>le repas</txtquestion>
+        <txtanswer>dinner</txtanswer>
+        <blobquestion></blobquestion>
+        <blobanswer></blobanswer>
+    </card>
+</cards>
