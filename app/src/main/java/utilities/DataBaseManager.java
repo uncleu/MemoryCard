@@ -188,7 +188,7 @@ public class DataBaseManager {
                 "txt_question," +
                 "txt_answer," +
                 "blob_question," +
-                "blob_answer) values(?,?,?,?,?,?,?,?)";
+                "blob_answer) values(?,?,?,?,?,?,?,?,?)";
         try {
             writableDB = databaseHelper.getWritableDatabase();
             writableDB.execSQL(sql, new Object[]{
@@ -224,7 +224,7 @@ public class DataBaseManager {
                 "txt_question text," +
                 "txt_answer text," +
                 "blob_question blob," +
-                "blob_answer blob) values(?,?,?,?,?,?,?,?)";
+                "blob_answer blob) values(?,?,?,?,?,?,?,?,?)";
 
         writableDB = databaseHelper.getWritableDatabase();
 
