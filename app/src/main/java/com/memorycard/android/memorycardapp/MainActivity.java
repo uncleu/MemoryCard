@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private Context context;
-
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         //dbmanager.createNewCardsGroupTab(cg);
 
 
-       Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+        toolbar= (Toolbar) findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_main);
         Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
 
@@ -79,8 +79,9 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(context, CardsGroupLoaderActivity.class);
                     startActivity(intent);
                 } else if(menuItem.getItemId() == R.id.menu_item2){
-                    getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
-
+                    //toolbar.setVisibility(View.GONE);
+                    Intent intent = new Intent(context, SettingsActivity.class);
+                    startActivity(intent);
                 }
 
                 if(!msg.equals("")) {
@@ -123,16 +124,7 @@ public class MainActivity extends AppCompatActivity {
         );
     }*/
 
-    public static class SettingsFragment extends PreferenceFragment {
 
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            // Load the preferences from an XML resource
-            addPreferencesFromResource(R.xml.settings);
-        }
-    }
 
 
 }
