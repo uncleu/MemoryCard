@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import utilities.DataBaseManager;
+import utilities.ProgressCircle;
 
 import static android.content.ContentValues.TAG;
 
@@ -25,15 +26,17 @@ public class CardsGroupLoaderActivity extends ListActivity {
     private ListView listView;
     private static List<CardsGroup>mCardsGroupsList;
     private Context context;
+    private ProgressCircle progressCircle;
+    private static final int CALLBACK_REQUEST = 1;
 
     public static final String EXTRA_TAB_NAME = "com.memorycard.android.memorycardapp.extra_tabname";
     public static final String EXTRA_CARDSGROUP_DESCRIPTION = "com.memorycard.android.memorycardapp.extra_cardsgroup_description";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);            // TODO Auto-generated method stub
         context = this;
         setContentView(R.layout.activity_cards_group_loader);
+
         listView = this.getListView();
         LoadCardsGroupListTask mytask = new LoadCardsGroupListTask();
         mytask.execute();
@@ -74,6 +77,10 @@ public class CardsGroupLoaderActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView lv, View v, int position, long id) {
         super.onListItemClick(lv, v, position, id);
+
+        progressCircle = (ProgressCircle)findViewById(R.id.circleProgressbar);
+        listView.getItemAtPosition(position);
+
         //get selected items
         CardsGroup cg =  mCardsGroupsList.get(position);
         String tabname = cg.getTab_name();
@@ -85,8 +92,27 @@ public class CardsGroupLoaderActivity extends ListActivity {
 
         intent.putExtra(EXTRA_TAB_NAME,tabname);
         intent.putExtra(EXTRA_CARDSGROUP_DESCRIPTION,desc);
-        startActivity(intent);
+        //startActivity(intent);
+        startActivityForResult(intent,CALLBACK_REQUEST);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == CALLBACK_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                // The Intent's data Uri identifies which contact was selected.
+                //update progressvalue
+                int progressValue = data.getIntExtra("progressValue",1);
+                int total = data.getIntExtra("total",1);
+                int result = progressValue*100/total;
+
+                progressCircle.setProgress(result);
+
+                // Do something with the contact here (bigger example below)
+            }
+        }
     }
 }
 

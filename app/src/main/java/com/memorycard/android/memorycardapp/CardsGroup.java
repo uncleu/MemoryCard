@@ -9,6 +9,9 @@ public class CardsGroup {
     private String tab_name;
     private Long lLastModifTimeInMillis;
     private String discription;
+
+
+    private int progressValue;
     private int mId;
     private int total;
     private List<Card> mCardsList;
@@ -40,6 +43,13 @@ public class CardsGroup {
     }
 
 
+    public int getProgressValue() {
+        return progressValue;
+    }
+
+    public void setProgressValue(int progressValue) {
+        this.progressValue = progressValue;
+    }
 
 
     public CardsGroup(){

@@ -51,8 +51,7 @@ public class CardFragment extends Fragment {
     private TextView txtResult;
     private TextView timeCountDown;
     private DataBaseManager dbmanager;
-    private CountDownTimer countDownTimer;
-    private boolean isTimesup;
+    private CountDownTimer countDownTimer=null;
 
     private OnFragmentInteractionListener mListener;
 
@@ -61,6 +60,37 @@ public class CardFragment extends Fragment {
     }
 
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+
+            if(CardsManagerActivity.isCountdownTimer){
+                countDownTimer = new CountDownTimer(CardsManagerActivity.countdownValue, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                        timeCountDown.setText("seconds remaining: " + millisUntilFinished / 1000);
+                    }
+
+                    public void onFinish() {
+                        timeCountDown.setText("done!");
+                        if (mListener != null) {
+                            mListener.onFragmentInteraction(Uri.parse("content://"
+                                    + "com.memorycard.android.memorycardapp"
+                                    + "/countdowntimer"));
+                        }
+
+                    }
+                };
+                countDownTimer.start();
+            }
+        }else{
+            // fragment is no longer visible
+            if (countDownTimer !=null){
+                countDownTimer.cancel();
+            }
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -113,6 +143,7 @@ public class CardFragment extends Fragment {
 
                 if(rightAnswer != null && rightAnswer.equals(txtAnswer.getText().toString())){
                     txtResult.setText("Congratulations!");
+                    CardsManagerActivity.correctResponse++; //test
                 }
                 else{
                     txtResult.setText("fail!");
@@ -169,27 +200,7 @@ public class CardFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //reset timer
-        if(SettingsUtilities.isCountdownTimerOn(context)){
-            countDownTimer = new CountDownTimer(SettingsUtilities.getCountdownByMilliSec(context), 1000) {
 
-                public void onTick(long millisUntilFinished) {
-                    timeCountDown.setText("seconds remaining: " + millisUntilFinished / 1000);
-                }
-
-                public void onFinish() {
-                    timeCountDown.setText("done!");
-                    isTimesup = true;
-                    if (mListener != null) {
-                        mListener.onFragmentInteraction(Uri.parse("content://"
-                                + "com.memorycard.android.memorycardapp"
-                                + "/countdowntimer"));
-                    }
-
-                }
-            };
-            countDownTimer.start();
-        }
     }
 
     @Override

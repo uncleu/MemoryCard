@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import utilities.DataBaseManager;
+import utilities.SettingsUtilities;
 
 import static android.content.ContentValues.TAG;
 
@@ -30,10 +32,16 @@ public class CardsManagerActivity extends FragmentActivity implements CardFragme
 
     private static List<Card> cardslist;
     String tabName;
-    public static Context context;
+    int tabPosition;
+    public Context context;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+
+    public static int countdownValue;
+    public static boolean isCountdownTimer;
     private int index;
+    public static int correctResponse = 1;
+
 
     ViewPager mPager;
     /**
@@ -54,6 +62,9 @@ public class CardsManagerActivity extends FragmentActivity implements CardFragme
         tabName = intent.getStringExtra(CardsGroupLoaderActivity.EXTRA_TAB_NAME);
         String cardsGroupDescription = intent.getStringExtra(CardsGroupLoaderActivity.EXTRA_CARDSGROUP_DESCRIPTION);
 
+
+        isCountdownTimer = SettingsUtilities.isCountdownTimerOn(context);
+        countdownValue = SettingsUtilities.getCountdownByMilliSec(context);
         LoadCardsListTask mytask = new LoadCardsListTask();
         mytask.execute();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -90,12 +101,27 @@ public class CardsManagerActivity extends FragmentActivity implements CardFragme
 
     @Override
     public void onStop() {
+
         super.onStop();
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
+        //finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        //update late modification date
+
+        Intent intent=getIntent();
+        Bundle bundle = new Bundle();
+        bundle.putInt("progressValue",correctResponse );
+        bundle.putInt("total",cardslist.size() );
+        intent.putExtras(bundle);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @Override
@@ -114,7 +140,6 @@ public class CardsManagerActivity extends FragmentActivity implements CardFragme
 
     public static Card getCardFromCardsList(int position) {
         Card card = null;
-
         if(cardslist != null) {
             card = cardslist.get(position);
         }
@@ -163,6 +188,7 @@ public class CardsManagerActivity extends FragmentActivity implements CardFragme
 
         }
     }
+
 
 
     private class CardFragmentAdapter extends FragmentStatePagerAdapter {
