@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Context context;
     private Toolbar toolbar;
+    private Button start;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +32,14 @@ public class MainActivity extends AppCompatActivity {
 
         context = getApplicationContext();
 
-
+        start = (Button)findViewById(R.id.list_button);
+        start.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, CardsGroupLoaderActivity.class);
+                startActivity(intent);
+            }
+        });
         //initToolBar();
         XmlUtilities xmltool = new XmlUtilities();
         InputStream  in= null;
@@ -99,11 +108,6 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
-    }
-
-    public void sendMessage(View view) {
-        Intent intent = new Intent(context, CardsGroupLoaderActivity.class);
-        startActivity(intent);
     }
 
 /*    public void initToolBar() {

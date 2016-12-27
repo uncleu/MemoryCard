@@ -3,10 +3,6 @@ package com.memorycard.android.memorycardapp;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by yina on 2016/12/17.
- */
-
 public class CardsGroup {
 
     private String name;

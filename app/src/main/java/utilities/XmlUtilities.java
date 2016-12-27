@@ -1,9 +1,5 @@
 package utilities;
 
-/**
- * Created by yina on 2016/12/18.
- */
-
 import android.util.Log;
 
 import com.memorycard.android.memorycardapp.Card;

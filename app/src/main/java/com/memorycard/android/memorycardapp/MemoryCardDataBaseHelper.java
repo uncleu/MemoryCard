@@ -4,10 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by yina on 2016/12/17.
- */
-
 public class MemoryCardDataBaseHelper extends SQLiteOpenHelper {
 
     private static final int VERSION = 2;

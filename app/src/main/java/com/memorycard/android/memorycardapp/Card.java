@@ -1,9 +1,5 @@
 package com.memorycard.android.memorycardapp;
 
-/**
- * Created by yina on 2016/12/17.
- */
-
 public class Card {
 
 

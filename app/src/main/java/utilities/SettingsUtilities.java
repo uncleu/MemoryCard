@@ -4,10 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-/**
- * Created by yina on 2016/12/27.
- */
-
 public class SettingsUtilities {
 
     private static int getCountdownBySec(Context context){

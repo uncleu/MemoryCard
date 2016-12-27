@@ -13,10 +13,6 @@ import com.memorycard.android.memorycardapp.MemoryCardDataBaseHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by yina on 2016/12/18.
- */
-
 public class DataBaseManager {
 
     private static String TAG = "DataBaseManager";
