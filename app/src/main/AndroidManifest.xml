@@ -20,7 +20,7 @@
         <activity
             android:name="com.memorycard.android.memorycard.SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".SettingsActivity" />
     </application>
 
 </manifest>

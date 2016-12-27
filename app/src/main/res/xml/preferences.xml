@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="Settings" >
+    <!-- 单独一个Switch开关 -->
+    <PreferenceCategory android:title="Using time countdown" >
+        <SwitchPreference
+            android:key="switch_preference_isCount"
+            android:summary="Time countdown?"
+            android:summaryOff="Time countdown on"
+            android:summaryOn="Time countdown off"
+            android:switchTextOff="Off"
+            android:switchTextOn="On"
+            android:title="Time countdown?"
+            />
+        <EditTextPreference
+            android:defaultValue="30"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:inputType="number"
+            android:title="time countdown by second"
+            android:key="countdown_value" />
+    </PreferenceCategory>
+
+        <ListPreference
+            android:key="frequency_type"
+            android:title="set your study frequency"
+            android:summary="frequency list summary"
+            android:entries="@array/listentries"
+            android:entryValues="@array/listvalues"
+            />
+
+</PreferenceScreen>

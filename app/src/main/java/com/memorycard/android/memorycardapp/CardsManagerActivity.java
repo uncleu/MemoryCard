@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ViewGroup;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -29,7 +30,7 @@ public class CardsManagerActivity extends FragmentActivity implements CardFragme
 
     private static List<Card> cardslist;
     String tabName;
-    private Context context;
+    public static Context context;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private int index;
@@ -100,6 +101,15 @@ public class CardsManagerActivity extends FragmentActivity implements CardFragme
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+        //Toast.makeText(MainActivity.this,"this is："+uri,Toast.LENGTH_SHORT).show();
+
+        if(mPager != null){
+            int currentIndex = mPager.getCurrentItem();
+            if((currentIndex++) <= cardslist.size()){
+                mPager.setCurrentItem(currentIndex);
+            }
+        }
+
     }
 
     public static Card getCardFromCardsList(int position) {
@@ -135,6 +145,7 @@ public class CardsManagerActivity extends FragmentActivity implements CardFragme
             super.onPostExecute(result);
             mPager.setAdapter(new CardFragmentAdapter(fragmentManager));
             //mPager.setCurrentItem(0);
+            mPager.setOffscreenPageLimit(0);
             mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
 
                 @Override
@@ -149,7 +160,6 @@ public class CardsManagerActivity extends FragmentActivity implements CardFragme
                 public void onPageScrollStateChanged(int state) {
                 }
             });
-
 
         }
     }
@@ -170,8 +180,12 @@ public class CardsManagerActivity extends FragmentActivity implements CardFragme
 
         @Override
         public int getCount() {
-
             return cardslist.size();
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            super.destroyItem(container, position, object);
         }
     }
 

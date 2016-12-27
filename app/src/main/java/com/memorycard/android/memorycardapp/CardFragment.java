@@ -20,6 +20,7 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import utilities.DataBaseManager;
+import utilities.SettingsUtilities;
 import utilities.TimeUtilities;
 
 
@@ -50,6 +51,7 @@ public class CardFragment extends Fragment {
     private TextView txtResult;
     private TextView timeCountDown;
     private DataBaseManager dbmanager;
+    private CountDownTimer countDownTimer;
     private boolean isTimesup;
 
     private OnFragmentInteractionListener mListener;
@@ -57,8 +59,6 @@ public class CardFragment extends Fragment {
     public CardFragment() {
         // Required empty public constructor
     }
-
-
 
 
 
@@ -144,18 +144,6 @@ public class CardFragment extends Fragment {
         });
 
 
-        new CountDownTimer(30000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                timeCountDown.setText("seconds remaining: " + millisUntilFinished / 1000);
-            }
-
-            public void onFinish() {
-                timeCountDown.setText("done!");
-                isTimesup = true;
-            }
-        }.start();
-
 
         return v;
     }
@@ -170,6 +158,7 @@ public class CardFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        this.context = context;
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -177,7 +166,39 @@ public class CardFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        //reset timer
+        if(SettingsUtilities.isCountdownTimerOn(context)){
+            countDownTimer = new CountDownTimer(SettingsUtilities.getCountdownByMilliSec(context), 1000) {
 
+                public void onTick(long millisUntilFinished) {
+                    timeCountDown.setText("seconds remaining: " + millisUntilFinished / 1000);
+                }
+
+                public void onFinish() {
+                    timeCountDown.setText("done!");
+                    isTimesup = true;
+                    if (mListener != null) {
+                        mListener.onFragmentInteraction(Uri.parse("content://"
+                                + "com.memorycard.android.memorycardapp"
+                                + "/countdowntimer"));
+                    }
+
+                }
+            };
+            countDownTimer.start();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (countDownTimer != null)
+                countDownTimer.cancel();
+
+    }
     @Override
     public void onDetach() {
         super.onDetach();

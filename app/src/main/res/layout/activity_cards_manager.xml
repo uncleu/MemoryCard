@@ -8,15 +8,16 @@
     tools:context="com.memorycard.android.memorycardapp.CardsManagerActivity"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
+<!--    <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:minHeight="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:titleTextColor="@android:color/white"
         android:background="?attr/colorPrimary">
-    </android.support.v7.widget.Toolbar>
-
+    </android.support.v7.widget.Toolbar>-->
+    <include
+        layout="@layout/app_toolbar" />
     <android.support.v4.view.ViewPager
         android:id="@+id/CardsViewPager"
         android:layout_width="match_parent"
