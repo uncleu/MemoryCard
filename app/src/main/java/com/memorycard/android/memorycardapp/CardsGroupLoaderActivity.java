@@ -38,6 +38,7 @@ public class CardsGroupLoaderActivity extends ListActivity {
         setContentView(R.layout.activity_cards_group_loader);
 
         listView = this.getListView();
+        listView.setDivider(null);
         LoadCardsGroupListTask mytask = new LoadCardsGroupListTask();
         mytask.execute();
     }
