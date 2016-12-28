@@ -1,6 +1,7 @@
 package com.memorycard.android.memorycardapp;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -143,10 +144,12 @@ public class CardFragment extends Fragment {
 
                 if(rightAnswer != null && rightAnswer.equals(txtAnswer.getText().toString())){
                     txtResult.setText("Congratulations!");
+                    txtResult.setTextColor(Color.rgb(0, 238, 118));
                     CardsManagerActivity.correctResponse++; //test
                 }
                 else{
-                    txtResult.setText("fail!");
+                    txtResult.setText("Try again!");
+                    txtResult.setTextColor(Color.rgb(255, 64, 64));
                 }
 
                 dbmanager.updateCard(mCard);

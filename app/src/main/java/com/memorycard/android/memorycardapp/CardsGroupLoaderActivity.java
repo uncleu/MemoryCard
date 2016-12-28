@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -27,13 +28,15 @@ public class CardsGroupLoaderActivity extends ListActivity {
     private static List<CardsGroup>mCardsGroupsList;
     private Context context;
     private ProgressCircle progressCircle;
+    private TextView tot;
+    private TextView ald;
     private static final int CALLBACK_REQUEST = 1;
 
     public static final String EXTRA_TAB_NAME = "com.memorycard.android.memorycardapp.extra_tabname";
     public static final String EXTRA_CARDSGROUP_DESCRIPTION = "com.memorycard.android.memorycardapp.extra_cardsgroup_description";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);            // TODO Auto-generated method stub
+        super.onCreate(savedInstanceState);
         context = this;
         setContentView(R.layout.activity_cards_group_loader);
 
@@ -82,6 +85,9 @@ public class CardsGroupLoaderActivity extends ListActivity {
         progressCircle = (ProgressCircle)findViewById(R.id.circleProgressbar);
         listView.getItemAtPosition(position);
 
+        tot = (TextView)findViewById(R.id.text_tot);
+        ald = (TextView)findViewById(R.id.text_ald);
+
         //get selected items
         CardsGroup cg =  mCardsGroupsList.get(position);
         String tabname = cg.getTab_name();
@@ -109,9 +115,11 @@ public class CardsGroupLoaderActivity extends ListActivity {
                 int total = data.getIntExtra("total",1);
                 int result = progressValue*100/total;
 
+                tot.setText(String.valueOf(total));
+                ald.setText(String.valueOf(progressValue));
+
                 progressCircle.setProgress(result);
 
-                // Do something with the contact here (bigger example below)
             }
         }
     }
