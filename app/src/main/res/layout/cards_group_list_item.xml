@@ -6,7 +6,19 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_height="10dp" />
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal"
+        android:textSize="40sp"
+        android:layout_height="60dp">
+    </TextView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
 
 
     <LinearLayout
@@ -76,17 +88,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
-
-    <TextView
-        android:id="@+id/text_view"
-        android:layout_width="match_parent"
-        android:gravity="center_horizontal"
-        android:textSize="40sp"
-        android:layout_height="60dp">
-    </TextView>
 
 </LinearLayout>
