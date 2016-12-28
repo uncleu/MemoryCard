@@ -14,14 +14,14 @@ public class ProgressCircle extends View {
     private int progressMax = 100;
     private int progressNum = 0;
     private final int circleLineWidth = 20;
-    private final int textWidth = 2;
+    private final int textWidth = 1;
 
     private final RectF RectFCir;
     private final Paint PaintCir;
 
     final Context cont;
 
-    private String textInCircle;
+    private String textInCircle = "Progress Review";
 
     public ProgressCircle(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -75,9 +75,13 @@ public class ProgressCircle extends View {
         RectFCir.bottom = height - circleLineWidth / 2; //lower right corner y
         //draw circle
         canvas.drawArc(RectFCir, -90, 360, false, PaintCir);
-        PaintCir.setColor(Color.rgb(0xff, 0xde, 0x0));//color circle
+        if(progressNum == 0){
+            PaintCir.setColor(Color.rgb(0xe9, 0xe9, 0xe9));
+        }else{
+            PaintCir.setColor(Color.rgb(0xff, 0xde, 0x0));//color circle
+        }
         canvas.drawArc(RectFCir, -90, ((float) progressNum / progressMax) * 360, false, PaintCir);
-        //text progress
+        //text
         PaintCir.setStrokeWidth(textWidth);
         String text = progressNum + "%";
         int textHeight = height / 4;
@@ -90,8 +94,12 @@ public class ProgressCircle extends View {
             PaintCir.setStrokeWidth(textWidth);
             text = textInCircle;
             textHeight = height / 8;
-            PaintCir.setTextSize(textHeight);
-            PaintCir.setColor(Color.rgb(0x99, 0x99, 0x99));
+            PaintCir.setTextSize(textHeight / 2);
+            if(progressNum == 0){
+                PaintCir.setColor(Color.rgb(0xe9, 0xe9, 0xe9));
+            }else{
+                PaintCir.setColor(Color.rgb(0x99, 0x99, 0x99));
+            }
             textWidth = (int) PaintCir.measureText(text, 0, text.length());
             PaintCir.setStyle(Paint.Style.FILL);
             canvas.drawText(text, width / 2 - textWidth / 2, height / 4 + textHeight / 2, PaintCir);
