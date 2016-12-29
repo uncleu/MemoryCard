@@ -22,8 +22,10 @@
 
 
     <LinearLayout
-    android:layout_width="200dp"
-    android:layout_height="200dp" android:orientation="horizontal" android:layout_gravity="center_horizontal">
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
 
         <utilities.ProgressCircle
             android:id="@+id/circleProgressbar"

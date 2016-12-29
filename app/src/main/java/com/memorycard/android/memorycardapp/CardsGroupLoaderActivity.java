@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import utilities.CircleIndicator;
 import utilities.DataBaseManager;
 import utilities.ProgressCircle;
 
@@ -30,6 +32,8 @@ public class CardsGroupLoaderActivity extends ListActivity {
     private ProgressCircle progressCircle;
     private TextView tot;
     private TextView ald;
+    public CircleIndicator indicat;
+    public ListView l;
     private static final int CALLBACK_REQUEST = 1;
 
     public static final String EXTRA_TAB_NAME = "com.memorycard.android.memorycardapp.extra_tabname";
@@ -40,8 +44,26 @@ public class CardsGroupLoaderActivity extends ListActivity {
         context = this;
         setContentView(R.layout.activity_cards_group_loader);
 
+        indicat = (CircleIndicator)findViewById(R.id.circleindicator);
+
         listView = this.getListView();
         listView.setDivider(null);
+
+        //listener
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+                    indicat.setCurrentPage(view.getFirstVisiblePosition());
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
+
         LoadCardsGroupListTask mytask = new LoadCardsGroupListTask();
         mytask.execute();
     }
@@ -74,7 +96,9 @@ public class CardsGroupLoaderActivity extends ListActivity {
                 tmplist.add(cg.getName());
             }
             String[] namelist = tmplist.toArray(new String[tmplist.size()]);
-            listView.setAdapter(new ArrayAdapter<String>(context, R.layout.cards_group_list_item, R.id.text_view, namelist));
+            listView.setAdapter(new ArrayAdapter<>(context, R.layout.cards_group_list_item, R.id.text_view, namelist));
+            indicat.initData(tmplist.size(), 0);
+            indicat.setCurrentPage(0);
         }
     }
 
