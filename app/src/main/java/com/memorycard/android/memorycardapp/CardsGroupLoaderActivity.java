@@ -25,7 +25,6 @@ import static android.content.ContentValues.TAG;
 
 public class CardsGroupLoaderActivity extends ListActivity {
 
-
     private ListView listView;
     private static List<CardsGroup>mCardsGroupsList;
     private Context context;
@@ -33,7 +32,6 @@ public class CardsGroupLoaderActivity extends ListActivity {
     private TextView tot;
     private TextView ald;
     public CircleIndicator indicat;
-    public ListView l;
     private static final int CALLBACK_REQUEST = 1;
 
     public static final String EXTRA_TAB_NAME = "com.memorycard.android.memorycardapp.extra_tabname";
