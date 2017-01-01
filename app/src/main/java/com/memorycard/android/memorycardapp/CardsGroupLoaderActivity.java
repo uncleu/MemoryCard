@@ -3,16 +3,20 @@ package com.memorycard.android.memorycardapp;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +27,7 @@ import utilities.ProgressCircle;
 
 import static android.content.ContentValues.TAG;
 
-public class CardsGroupLoaderActivity extends ListActivity {
+public class CardsGroupLoaderActivity extends ListActivity implements LoaderManager.LoaderCallbacks<Cursor>  {
 
     private ListView listView;
     private static List<CardsGroup>mCardsGroupsList;
@@ -33,6 +37,8 @@ public class CardsGroupLoaderActivity extends ListActivity {
     private TextView ald;
     public CircleIndicator indicat;
     private static final int CALLBACK_REQUEST = 1;
+    private SimpleCursorAdapter mAdapter;
+
 
     public static final String EXTRA_TAB_NAME = "com.memorycard.android.memorycardapp.extra_tabname";
     public static final String EXTRA_CARDSGROUP_DESCRIPTION = "com.memorycard.android.memorycardapp.extra_cardsgroup_description";
@@ -145,6 +151,28 @@ public class CardsGroupLoaderActivity extends ListActivity {
             }
         }
     }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
+        Uri baseUri = Uri.withAppendedPath(MemoryCardContentProvider.BASE_URI,DataBaseManager.LIST_TAB+"/1");
+        String select = null;
+        return new CursorLoader(context,baseUri,DataBaseManager.listProjection,select,null,null);
+    }
+
+
+
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
+    }
+
 }
 
 

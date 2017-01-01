@@ -14,6 +14,9 @@ public class CardsGroup {
     private int progressValue;
     private int mId;
     private int total;
+
+
+    private int accuracy;
     private List<Card> mCardsList;
 
 
@@ -104,5 +107,12 @@ public class CardsGroup {
     }
 
 
+    public int getAccuracy() {
+        return accuracy;
+    }
+
+    public void setAccuracy(int accuracy) {
+        this.accuracy = accuracy;
+    }
 
 }

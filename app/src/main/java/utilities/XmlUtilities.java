@@ -64,7 +64,8 @@ public class XmlUtilities {
                         } else if (tagname.equalsIgnoreCase("txtanswer")) {
                             newCard.setMtxtAnswer(text);
                         } else if (tagname.equalsIgnoreCase("blobquestion")) {
-                            newCard.setMblobQuestion(text);
+                            if(text != null)
+                                newCard.setMblobQuestion(text.getBytes());
                         } else if (tagname.equalsIgnoreCase("blobanswer")) {
                             newCard.setMblobAnswer(text);
                         }

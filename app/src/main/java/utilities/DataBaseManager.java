@@ -1,17 +1,22 @@
 package utilities;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.util.Log;
 
 import com.memorycard.android.memorycardapp.Card;
 import com.memorycard.android.memorycardapp.CardsGroup;
+import com.memorycard.android.memorycardapp.MemoryCardContentProvider;
 import com.memorycard.android.memorycardapp.MemoryCardDataBaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.id.list;
 
 public class DataBaseManager {
 
@@ -28,11 +33,11 @@ public class DataBaseManager {
 
     private Context mContext;
 
-    private static final String LIST_TAB = "cardsgroup_list";
+    public static final String LIST_TAB = "cardsgroup_list";
 
     private static String CREATE_CARDSGROUP_TAB = "create ?(" +
-            "id integer primary key," +
-            "groupId integer," +
+            "_id integer primary key," +
+            "group_id integer," +
             "difficulty integer," +
             "txt_question text," +
             "txt_answer text," +
@@ -40,11 +45,59 @@ public class DataBaseManager {
             "blob_answer blob)";
 
     private static String CREATE_GROUPLIST_TAB = "create cardsgroup_list (" +
-            "id integer primary key," +
+            "_id integer primary key," +
             "name text," +
             "tab_name text," +
             "create_date long," +
             "lastmodif_date long)";
+
+
+    //card db columns
+    public static final String COL_CARD_ID = "_id";
+    public static final String COL_CARD_GROUP_ID = "group_id";
+    public static final String COL_CARD_TAB_NAME = "tab_name";
+    public static final String COL_CARD_DIFFICULTY = "difficulty";
+    public static final String COL_CARD_DAY = "day";
+    public static final String COL_CARD_TXT_QUESTION = "txt_question";
+    public static final String COL_CARD_TXT_ANSWER = "txt_answer";
+    public static final String COL_CARD_IMG_QUESTION = "img_question";
+    public static final String COL_CARD_IMG_ANSWER = "img_answer";
+
+
+    //cardgroup list columns
+    public static final String COL_LIST_ID = "_id";
+    public static final String COL_LIST_NAME = "name";
+    public static final String COL_LIST_TAB_NAME = "tab_name";
+    public static final String COL_LIST_TAB_DESCRIPTION= "description";
+    public static final String COL_LIST_CREATE_DATE = "create_date";
+    public static final String COL_LIST_LAST_MODIF_DATE = "lastmodif_date";
+    public static final String COL_LIST_ACCURACY = "accuracy";
+
+
+    public static final String[] listProjection =
+            {
+                    DataBaseManager.COL_LIST_ID,
+                    DataBaseManager.COL_LIST_NAME,
+                    DataBaseManager.COL_LIST_TAB_NAME,
+                    DataBaseManager.COL_LIST_TAB_DESCRIPTION,
+                    DataBaseManager.COL_LIST_CREATE_DATE,
+                    DataBaseManager.COL_LIST_LAST_MODIF_DATE,
+                    DataBaseManager.COL_LIST_ACCURACY
+            };
+
+
+    public static final String[] cardProjection =
+            {
+                    DataBaseManager.COL_CARD_ID,
+                    DataBaseManager.COL_CARD_GROUP_ID,
+                    DataBaseManager.COL_CARD_TAB_NAME,
+                    DataBaseManager.COL_CARD_DIFFICULTY,
+                    DataBaseManager.COL_CARD_DAY,
+                    DataBaseManager.COL_CARD_TXT_QUESTION,
+                    DataBaseManager.COL_CARD_TXT_ANSWER,
+                    DataBaseManager.COL_CARD_IMG_QUESTION,
+                    DataBaseManager.COL_CARD_IMG_ANSWER
+            };
 
 
     public static DataBaseManager getDbManager(Context context) {
@@ -64,15 +117,15 @@ public class DataBaseManager {
 
 
     private int getMaxGroupListId() {
-        String sql = "select max(id) as id from cardsgroup_list";
+        String sql = "select max(_id) as _id from cardsgroup_list";
         try {
             readableDB = databaseHelper.getReadableDatabase();
-           // Cursor cursor = readableDB.query("cardsgroup_list", new String[]{"MAX(id) as id"}, null, null, null, null, null);
+            // Cursor cursor = readableDB.query("cardsgroup_list", new String[]{"MAX(id) as id"}, null, null, null, null, null);
             Cursor cursor = readableDB.rawQuery(sql, null);
 
             Integer id = 0;
-            if(cursor != null){
-                if(cursor.moveToFirst()){
+            if (cursor != null) {
+                if (cursor.moveToFirst()) {
                     id = cursor.getInt(0);
                 }
             }
@@ -86,14 +139,14 @@ public class DataBaseManager {
     }
 
     private int getMaxCardId(String tab_name) {
-        String sql = "select max(id) from ?";
+        String sql = "select max(_id) from ?";
         try {
             readableDB = databaseHelper.getReadableDatabase();
-            Cursor cursor = readableDB.query(tab_name, new String[]{"MAX(id) as id"}, null, null, null, null, null);
+            Cursor cursor = readableDB.query(tab_name, new String[]{"MAX(_id) as _id"}, null, null, null, null, null);
 
-            if(cursor != null){
-                if(cursor.moveToFirst()){
-                    String sId = cursor.getString(cursor.getColumnIndex("id"));
+            if (cursor != null) {
+                if (cursor.moveToFirst()) {
+                    String sId = cursor.getString(cursor.getColumnIndex("_id"));
                     Log.d(TAG, "found max CardId of " + tab_name + " in database successful");
                     return Integer.parseInt(sId);
                 }
@@ -106,19 +159,19 @@ public class DataBaseManager {
         return 0;
     }
 
-    public void ceateNewCardsGroupDataBaseTable(String tab_name) {
-        String sql = "create table if not exists "+
-                tab_name+
+    public static void ceateNewCardsGroupDataBaseTable(String tab_name) {
+        String sql = "create table if not exists " +
+                tab_name +
                 "(" +
-                "id integer primary key," +
-                "groupId integer," +
+                "_id integer primary key," +
+                "group_id integer," +
                 "tab_name text," +
                 "difficulty integer," +
                 "day integer," +
                 "txt_question text," +
                 "txt_answer text," +
-                "blob_question text," +
-                "blob_answer text)";
+                "img_question blob," +
+                "img_answer text)";
         try {
             writableDB = databaseHelper.getWritableDatabase();
             writableDB.execSQL(sql);
@@ -139,7 +192,7 @@ public class DataBaseManager {
         }
 
         //fill table
-        if (cardsgroup.getTotal() > 0) {
+        if (cardsgroup != null && cardsgroup.getTotal() > 0) {
             List<Card> cardslist = cardsgroup.getmCardsList();
 
             for (Card card : cardslist) {
@@ -157,7 +210,7 @@ public class DataBaseManager {
             writableDB = databaseHelper.getWritableDatabase();
 
             ContentValues contentValues = new ContentValues();
-            contentValues.put("id", newId);
+            contentValues.put("_id", newId);
             contentValues.put("name", cardsgroup.getName());
             contentValues.put("tab_name", tab_name);
             contentValues.put("create_date", TimeUtilities.getCurrentTimeInMillies());
@@ -173,18 +226,18 @@ public class DataBaseManager {
 
     private void addCard(Card card, String tab_name) {
 
-        String sql = "insert into "+
-                tab_name+
+        String sql = "insert into " +
+                tab_name +
                 "(" +
-                "id," +
-                "groupId," +
-                "tab_name,"+
+                "_id," +
+                "group_id," +
+                "tab_name," +
                 "difficulty," +
                 "day," +
                 "txt_question," +
                 "txt_answer," +
-                "blob_question," +
-                "blob_answer) values(?,?,?,?,?,?,?,?,?)";
+                "img_question," +
+                "img_answer) values(?,?,?,?,?,?,?,?,?)";
         try {
             writableDB = databaseHelper.getWritableDatabase();
             writableDB.execSQL(sql, new Object[]{
@@ -209,32 +262,32 @@ public class DataBaseManager {
     }
 
     void updateExistedCard(Card card, String tab_name) {
-        String sql = "update "+
-                tab_name+
+        String sql = "update " +
+                tab_name +
                 "(" +
-                "id integer primary key," +
-                "groupId integer," +
-                "tab_name text,"+
+                "_id integer primary key," +
+                "group_id integer," +
+                "tab_name text," +
                 "difficulty integer," +
                 "day integer" +
                 "txt_question text," +
                 "txt_answer text," +
-                "blob_question blob," +
-                "blob_answer blob) values(?,?,?,?,?,?,?,?,?)";
+                "img_question blob," +
+                "img_answer blob) values(?,?,?,?,?,?,?,?,?)";
 
         writableDB = databaseHelper.getWritableDatabase();
 
         ContentValues cv = new ContentValues();
-        cv.put("groupId", card.getmGroupId());
-        cv.put("tab_name",card.getMtabName());
+        cv.put("group_id", card.getmGroupId());
+        cv.put("tab_name", card.getMtabName());
         cv.put("difficulty", card.getmDifficultyScore());
         cv.put("day", card.getmDay());
         cv.put("txt_question", card.getMtxtQuestion());
         cv.put("txt_answer", card.getMtxtAnswer());
-        cv.put("blob_question", card.getMblobQuestion());
-        cv.put("blob_answer", card.getMblobAnswer());
+        cv.put("img_question", card.getMblobQuestion());
+        cv.put("img_answer", card.getMblobAnswer());
         try {
-            writableDB.update(tab_name, cv, "id=" + card.getmDay(), null);
+            writableDB.update(tab_name, cv, "_id=" + card.getmDay(), null);
             Log.d(TAG, "Updating card " +
                     card.getmId() +
                     " into table " +
@@ -246,9 +299,9 @@ public class DataBaseManager {
         }
     }
 
-    public void updateCard(Card card){
+    public void updateCard(Card card) {
         String tab_name = card.getMtabName();
-        updateExistedCard(card,tab_name);
+        updateExistedCard(card, tab_name);
     }
 
     private void updateCardsGroup(Card card, String tab_name) {
@@ -265,13 +318,13 @@ public class DataBaseManager {
     }
 
     private CardsGroup getCardsGroupInfoById(int id) {
-        String sql = "select id from tab_name";
+        String sql = "select _id from tab_name";
         CardsGroup cardsGroup = new CardsGroup();
         try {
             readableDB = databaseHelper.getReadableDatabase();
             Cursor cursor = readableDB.query(LIST_TAB,
                     new String[]{"name", "tab_name", "description", "lastmodif_date"},
-                    "id=" + id,
+                    "_id=" + id,
                     null, null, null, null);
 
             String sName = cursor.getString(cursor.getColumnIndex("name"));
@@ -290,7 +343,7 @@ public class DataBaseManager {
             Log.d(TAG, "found description " + description + " in database successful");
 
         } catch (Exception e) {
-            Log.e(TAG, "error found during getCardsGroupInfoById  groupid = " + id + " in database");
+            Log.e(TAG, "error found during getCardsGroupInfoById  group_id = " + id + " in database");
             e.printStackTrace();
         }
         return cardsGroup;
@@ -302,9 +355,9 @@ public class DataBaseManager {
         try {
             readableDB = databaseHelper.getReadableDatabase();
 
-            Cursor cursor = readableDB.rawQuery("select * from "+tabName,null);
+            Cursor cursor = readableDB.rawQuery("select * from " + tabName, null);
 
-            while(cursor.moveToNext()){
+            while (cursor.moveToNext()) {
 
                 Card card = new Card();
 
@@ -315,7 +368,8 @@ public class DataBaseManager {
                 card.setmDay(cursor.getInt(4));
                 card.setMtxtQuestion(cursor.getString(5));
                 card.setMtxtAnswer(cursor.getString(6));
-                card.setMblobQuestion(cursor.getString(7));
+                byte[] bytes = cursor.getBlob(7);
+                card.setMblobQuestion(bytes);
                 card.setMblobAnswer(cursor.getString(8));
 
                 cardslist.add(card);
@@ -330,80 +384,95 @@ public class DataBaseManager {
         return cardslist;
     }
 
-    void deleteCardsGroupFromDataBase(CardsGroup cardsGroup)
-    {
+    void deleteCardsGroupFromDataBase(CardsGroup cardsGroup) {
         String tab_name = cardsGroup.getTab_name();
         int groupId = cardsGroup.getmId();
-        String sql = "delete from "+
-                tab_name+
-                " where id = ?";
+        String sql = "delete from " +
+                tab_name +
+                " where _id = ?";
         writableDB = databaseHelper.getWritableDatabase();
         try {
-            writableDB.execSQL(sql,new String[]{Integer.toString(groupId)});
+            writableDB.execSQL(sql, new String[]{Integer.toString(groupId)});
             Log.d(TAG, "Delete cardsgroup " +
                     cardsGroup.getName() +
                     "from grouplist successful");
         } catch (Exception e) {
-            Log.e(TAG, "error during delete CardsGroup " + cardsGroup.getName() );
+            Log.e(TAG, "error during delete CardsGroup " + cardsGroup.getName());
             e.printStackTrace();
         }
 
-        sql = "drop table "+tab_name;
+        sql = "drop table " + tab_name;
         try {
             writableDB = databaseHelper.getWritableDatabase();
-            writableDB.execSQL(sql,new String[]{tab_name});
+            writableDB.execSQL(sql, new String[]{tab_name});
             Log.d(TAG, "Delete cardsgroup table from database" + cardsGroup.getName() + " successful");
         } catch (Exception e) {
-            Log.e(TAG, "error during delete CardsGroup " + cardsGroup.getName() );
+            Log.e(TAG, "error during delete CardsGroup " + cardsGroup.getName());
             e.printStackTrace();
         }
 
 
     }
 
-    void CreateCardsGroupDBListe(){
-        String sql ="create table if not exists cardsgroup_list (" +
-                "id integer primary key," +
+    public void deleteCardsGroupFromDataBase(ContentResolver cr,String tab_name){
+
+        String where = COL_LIST_TAB_NAME + "=?";
+        String[] args = new String[] { tab_name };
+        Uri uri = Uri.withAppendedPath(MemoryCardContentProvider.BASE_URI,LIST_TAB);
+        MemoryCardContentProvider.checkURI(uri,LIST_TAB);
+        MemoryCardContentProvider.tabName = LIST_TAB;
+        cr.delete(uri, where, args );
+
+        dropTable(tab_name);
+
+    }
+
+
+
+
+    void CreateCardsGroupDBListe() {
+        String sql = "create table if not exists cardsgroup_list (" +
+                "_id integer primary key," +
                 "name text," +
                 "tab_name text," +
                 "description text," +
                 "create_date long," +
-                "lastmodif_date long)";
+                "lastmodif_date long," +
+                "accuracy integer)";
 
         writableDB = databaseHelper.getWritableDatabase();
         try {
             writableDB.execSQL(sql);
             Log.d(TAG, "Create cardsgroup list table into database successful");
         } catch (Exception e) {
-            Log.e(TAG, "error during Create cardsgroup list table into database" );
+            Log.e(TAG, "error during Create cardsgroup list table into database");
             e.printStackTrace();
         }
     }
 
-    public void dropTable(String tab_name){
-        String sql = "drop table if exists "+tab_name;
+    public void dropTable(String tab_name) {
+        String sql = "drop table if exists " + tab_name;
         writableDB = databaseHelper.getWritableDatabase();
         try {
             writableDB.execSQL(sql);
             Log.d(TAG, "drop cardsgroup list table into database successful");
         } catch (Exception e) {
-            Log.e(TAG, "error during drop cardsgroup list table into database" );
+            Log.e(TAG, "error during drop cardsgroup list table into database");
             e.printStackTrace();
         }
 
     }
 
 
-
-    public List<CardsGroup> loadCardsGroupList(){
+    public List<CardsGroup> loadCardsGroupList() {
         List<CardsGroup> list = new ArrayList<>();
 
         try {
             readableDB = databaseHelper.getReadableDatabase();
 
-            Cursor cursor = readableDB.rawQuery("select * from "+LIST_TAB, null);
+            Cursor cursor = readableDB.rawQuery("select * from " + LIST_TAB, null);
 
-            while(cursor.moveToNext()){
+            while (cursor.moveToNext()) {
 
                 CardsGroup cardsGroup = new CardsGroup();
 
@@ -412,6 +481,7 @@ public class DataBaseManager {
                 cardsGroup.setTab_name(cursor.getString(2));
                 cardsGroup.setDiscription(cursor.getString(3));
                 cardsGroup.setlLastModifTimeInMillis(cursor.getLong(5));
+                cardsGroup.setAccuracy(cursor.getInt(6));
 
                 list.add(cardsGroup);
                 Log.d(TAG, "found CardsGroup " + cardsGroup.getName() + " in database successful");
@@ -422,11 +492,101 @@ public class DataBaseManager {
             e.printStackTrace();
         }
 
-        return  list;
+        return list;
 
+    }
+
+    public static boolean isTableExists(String tableName) {
+
+        try {
+            readableDB = databaseHelper.getReadableDatabase();
+
+            Cursor cursor = readableDB.rawQuery("SELECT COUNT(*) FROM sqlite_master WHERE type = ? AND name = ?", new String[]{"table", tableName});
+
+            if (!cursor.moveToFirst()) {
+                cursor.close();
+                return false;
+            }
+            int count = cursor.getInt(0);
+            cursor.close();
+            return count > 0;
+
+        } catch (Exception e) {
+            Log.e(TAG, "error found during getCardsGroupList in database ");
+            e.printStackTrace();
+            return false;
+        }
     }
 
 
 
+
+    public static List<CardsGroup> extractCGfromCursor(Cursor cursor) {
+        List<CardsGroup> list = new ArrayList<>();
+
+
+        if (cursor != null && cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+
+                CardsGroup cardsGroup = new CardsGroup();
+
+                cardsGroup.setmId(cursor.getInt(0));
+                cardsGroup.setName(cursor.getString(1));
+                cardsGroup.setTab_name(cursor.getString(2));
+                cardsGroup.setDiscription(cursor.getString(3));
+                cardsGroup.setlLastModifTimeInMillis(cursor.getLong(5));
+                cardsGroup.setAccuracy(cursor.getInt(6));
+
+                list.add(cardsGroup);
+                Log.d(TAG, "found CardsGroup " + cardsGroup.getName());
+            }
+
+
+        }
+        return list;
+
+    }
+
+
+    public static List<Card> extractCardfromCursor(Cursor cursor) {
+
+        List<Card> list = new ArrayList<>();
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+
+                Card card = new Card();
+
+                card.setmId(cursor.getInt(0));//id
+                card.setmGroupId(cursor.getInt(1));//groupId
+                card.setMtabName(cursor.getString(2));
+                card.setmDifficultyScore(cursor.getInt(3));
+                card.setmDay(cursor.getInt(4));
+                card.setMtxtQuestion(cursor.getString(5));
+                card.setMtxtAnswer(cursor.getString(6));
+                card.setMblobQuestion(cursor.getBlob(7));
+                card.setMblobAnswer(cursor.getString(8));
+
+                list.add(card);
+                Log.d(TAG, "found Card");
+            }
+
+        }
+        return list;
+    }
+
+    public static ContentValues generateContentValues(Card card){
+
+        ContentValues cv = new ContentValues();
+        cv.put("group_id", card.getmGroupId());
+        cv.put("tab_name", card.getMtabName());
+        cv.put("difficulty", card.getmDifficultyScore());
+        cv.put("day", card.getmDay());
+        cv.put("txt_question", card.getMtxtQuestion());
+        cv.put("txt_answer", card.getMtxtAnswer());
+        cv.put("img_question", card.getMblobQuestion());
+        cv.put("img_answer", card.getMblobAnswer());
+
+        return cv;
+    }
 
 }

@@ -3,7 +3,7 @@ package com.memorycard.android.memorycardapp;
 public class Card {
 
 
-    private String mblobQuestion;
+    private byte[] mblobQuestion;
     private String mtxtQuestion;
     private String mblobAnswer;
     private String mtxtAnswer;
@@ -34,12 +34,11 @@ public class Card {
         this.mblobAnswer = mblobAnswer;
     }
 
-    public String getMblobQuestion() {
+    public byte[] getMblobQuestion() {
         return mblobQuestion;
     }
 
-    public void setMblobQuestion(String mblobQuestion) {
-        this.mblobQuestion = mblobQuestion;
+    public void setMblobQuestion(byte[] mblobQuestion) {
         this.mblobQuestion = mblobQuestion;
     }
 

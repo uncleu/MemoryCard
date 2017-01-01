@@ -1,0 +1,49 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.memorycard.android.memorycardapp.MainCustomSettingsFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+        <TextView
+            android:text="Enter name of new cards group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_newcardsgroup"
+            android:layout_weight="0.03" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="please enter a name"
+            android:ems="10"
+            android:id="@+id/new_tab_name" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.03">
+
+            <Button
+                android:text="Validate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/validate_button"
+                android:layout_weight="0.03" />
+
+            <Button
+                android:text="Cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cancel_button"
+                android:layout_weight="0.03" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

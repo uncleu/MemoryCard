@@ -3,7 +3,6 @@ package com.memorycard.android.memorycardapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -24,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
     private Toolbar toolbar;
     private Button start;
+    private Button start2;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,13 +34,24 @@ public class MainActivity extends AppCompatActivity {
         context = getApplicationContext();
 
         start = (Button)findViewById(R.id.list_button);
+        start2 = (Button)findViewById(R.id.start2_button);
+
         start.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MainCustomSettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        start2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, CardsGroupLoaderActivity.class);
                 startActivity(intent);
             }
         });
+
         //initToolBar();
         XmlUtilities xmltool = new XmlUtilities();
         InputStream  in= null;
@@ -53,12 +66,17 @@ public class MainActivity extends AppCompatActivity {
 
         DataBaseManager dbmanager = DataBaseManager.getDbManager(this);
         MemoryCardDataBaseHelper helper = dbmanager.getDatabaseHelper();
-/*      dbmanager.dropTable("t1");
+ /*      dbmanager.dropTable("t1");
         dbmanager.dropTable("t2");
         dbmanager.dropTable("t3");
         dbmanager.dropTable("t4");
         dbmanager.dropTable("t5");
         dbmanager.dropTable("t6");
+        dbmanager.dropTable("t7");
+        dbmanager.dropTable("t8");
+        dbmanager.dropTable("t9");
+        dbmanager.dropTable("t10");
+        dbmanager.dropTable("t11");
         dbmanager.dropTable("cardsgroup_list");*/
         //dbmanager.createNewCardsGroupTab(cg);
 
@@ -70,19 +88,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 String msg = "";
-/*                switch (menuItem.getItemId()) {
-
-                    case R.id.menu_item1:
-                        Intent intent = new Intent(context, CardsGroupLoaderActivity.class);
-                        startActivity(intent);
-                        break;
-
-                    case R.id.menu_item2:
-                        getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
-                        break;
-
-
-                }*/
                 if(menuItem.getItemId() == R.id.menu_item1){
                     Intent intent = new Intent(context, CardsGroupLoaderActivity.class);
                     startActivity(intent);

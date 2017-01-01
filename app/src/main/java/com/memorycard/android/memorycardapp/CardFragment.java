@@ -15,12 +15,14 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
 import utilities.DataBaseManager;
+import utilities.ImageUtilities;
 import utilities.SettingsUtilities;
 import utilities.TimeUtilities;
 
@@ -53,6 +55,7 @@ public class CardFragment extends Fragment {
     private TextView timeCountDown;
     private DataBaseManager dbmanager;
     private CountDownTimer countDownTimer=null;
+    private ImageView imageView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -135,6 +138,14 @@ public class CardFragment extends Fragment {
         //txtAnswer.setText(mCard.getMtxtAnswer());
         rightAnswer = mCard.getMtxtAnswer();
         txtQuestion.setText(mCard.getMtxtQuestion());
+
+        //image
+        imageView = (ImageView)v.findViewById(R.id.image_question);
+        byte[] bytes =mCard.getMblobQuestion();
+        imageView.setImageBitmap(ImageUtilities.BytesToBimap(bytes));
+
+
+
         if(mCard.getmDifficultyScore()>0)
                     isDifficult.setChecked(true);
 
