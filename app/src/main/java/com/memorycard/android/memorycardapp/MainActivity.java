@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.bg_card)
                 .addProfiles(
-                        new ProfileDrawerItem().withName("Chen Si").withEmail("chensi@gmail.com").withIcon(getResources().getDrawable(R.drawable.ic_menu_send))
+                        new ProfileDrawerItem().withName("Chen Si").withEmail("chensi@gmail.com").withIcon(getResources().getDrawable(R.drawable.cat))
                 )
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
@@ -67,12 +67,12 @@ public class MainActivity extends AppCompatActivity {
 
         new DrawerBuilder(this)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName("Home").withIcon(R.drawable.ic_menu_camera),
+                        new PrimaryDrawerItem().withName("Home").withIcon(R.drawable.profile),
                         new SectionDrawerItem().withName("SectiongDrawer"),
-                        new SecondaryDrawerItem().withName("Cards Group List").withIcon(R.drawable.ic_menu_camera),
-                        new SecondaryDrawerItem().withName("Editing Cards Group").withIcon(R.drawable.ic_menu_camera),
-                        new SecondaryDrawerItem().withName("Download").withIcon(R.drawable.ic_menu_camera),
-                        new SecondaryDrawerItem().withName("Contact us").withIcon(R.drawable.ic_menu_camera).withEnabled(false)
+                        new SecondaryDrawerItem().withName("Cards Group List").withIcon(R.drawable.group),
+                        new SecondaryDrawerItem().withName("Editing Cards Group").withIcon(R.drawable.editing),
+                        new SecondaryDrawerItem().withName("Download").withIcon(R.drawable.download),
+                        new SecondaryDrawerItem().withName("Contact us").withIcon(R.drawable.us).withEnabled(false)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
 
-/*                        if (drawerItem instanceof Nameable) {
+/*                      if (drawerItem instanceof Nameable) {
                             toolbar.setTitle(((Nameable) drawerItem).getName().getText(CompactHeaderDrawerActivity.this));
                         }*/
 

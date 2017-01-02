@@ -139,7 +139,7 @@ public class DownLoadAndInstallActivity extends AppCompatActivity {
                             File path = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
                             File file = new File(downloadFilePath);
                             String absoluPath = file.getAbsolutePath();
-                            DownLoadAndInstallUtilities.Unzip.start(absoluPath);
+                            DownLoadAndInstallUtilities.Unzip.start(absoluPath, getApplicationContext());
                             DownLoadAndInstallUtilities.install(context,path+File.separator+downloadFileName);
 
                             Toast.makeText(getApplicationContext(), "Download " + downloadFileName+" Cards successful", Toast.LENGTH_SHORT).show();
