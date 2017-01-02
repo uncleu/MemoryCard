@@ -5,6 +5,7 @@
     android:id="@+id/activity_cards_group_loader"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_main"
     tools:context="com.memorycard.android.memorycardapp.CardsGroupLoaderActivity"
     android:orientation="vertical">
 
@@ -24,7 +25,7 @@
         android:layout_weight="1"
         android:layout_gravity="center_horizontal"
         indicator:circleInterval="10dp"
-        indicator:fillColor="#8DEEEE"
+        indicator:fillColor="#FDD835"
         indicator:radius="5dp"
         indicator:strokeColor="#cecece" />
 
