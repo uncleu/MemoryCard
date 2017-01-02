@@ -199,7 +199,7 @@ public class CardCustomSettingsActivity extends AppCompatActivity{
         protected void onPostExecute(Uri result)
         {
             super.onPostExecute(result);
-            Toast.makeText(context,"update card successful",Toast.LENGTH_SHORT);
+            Toast.makeText(context,"update card successful",Toast.LENGTH_SHORT).show();
 
         }
     }
