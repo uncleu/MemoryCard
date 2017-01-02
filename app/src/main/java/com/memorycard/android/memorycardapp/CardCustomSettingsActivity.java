@@ -33,10 +33,6 @@ import utilities.ImageUtilities;
 
 import static android.content.ContentValues.TAG;
 
-/**
- * Created by yina on 2016/12/31.
- */
-
 public class CardCustomSettingsActivity extends AppCompatActivity{
 
     public String tab_name;

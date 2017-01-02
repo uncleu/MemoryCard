@@ -5,10 +5,6 @@ import android.graphics.BitmapFactory;
 
 import java.io.ByteArrayOutputStream;
 
-/**
- * Created by yina on 2017/1/1.
- */
-
 public class ImageUtilities {
 
     public static byte[] BitmapToBytes(Bitmap bm) {

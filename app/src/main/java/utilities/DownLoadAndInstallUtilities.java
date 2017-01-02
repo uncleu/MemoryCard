@@ -1,10 +1,14 @@
 package utilities;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import com.memorycard.android.memorycardapp.CardsGroup;
 import com.memorycard.android.memorycardapp.MemoryCardDataBaseHelper;
+import com.memorycard.android.memorycardapp.R;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,20 +24,20 @@ public class DownLoadAndInstallUtilities {
 
     public static class Unzip {
 
-        public static void start(String zipPath){
+        public static void start(String zipPath, Context cont){
             String desc = zipPath.substring(0, zipPath.lastIndexOf('/'))+"/";
             try{
-                unZipFile(zipPath, desc);
+                unZipFile(zipPath, desc, cont);
             }catch(IOException e) {
                 e.printStackTrace();
             }
         }
 
-        public static void unZipFile(String zipPath,String desc) throws IOException{
-            unZipFile(new File(zipPath), desc);
+        public static void unZipFile(String zipPath,String desc, Context cont) throws IOException{
+            unZipFile(new File(zipPath), desc, cont);
         }
 
-        public static void unZipFile(File zipFile,String desc) throws IOException{
+        public static void unZipFile(File zipFile,String desc, Context cont) throws IOException{
             File path = new File(desc);
             if(!path.exists()){
                 Log.e("Unzip","Path not exist");
@@ -68,6 +72,15 @@ public class DownLoadAndInstallUtilities {
                 out.close();
             }
             zip.close();
+
+            File[] tempList = path.listFiles();
+            for (int i = 0; i < tempList.length; i++) {
+                if (tempList[i].isFile()) {
+                    if(tempList[i].getName().endsWith(".xml")) {
+                        install(cont ,tempList[i].getAbsolutePath());
+                    }
+                }
+            }
 
             Log.d("Unzip","File Unziped");
         }
