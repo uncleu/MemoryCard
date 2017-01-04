@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -30,6 +31,7 @@ import com.mikepenz.materialize.util.UIUtils;
 import java.io.IOException;
 import java.io.InputStream;
 
+import utilities.CardsFilter;
 import utilities.DataBaseManager;
 import utilities.XmlUtilities;
 
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private Button start;
     private Button start2;
 
+    public static int day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,19 @@ public class MainActivity extends AppCompatActivity {
         context = getApplicationContext();
 
 
+        day = CardsFilter.getCurrentDayofStudy(context);
+
+        TextView displayDay = (TextView) findViewById(R.id.display_day);
+        displayDay.setText(Integer.toString(day));
+
+
+/*        DataBaseManager dbmanager = DataBaseManager.getDbManager(this);
+        MemoryCardDataBaseHelper helper = dbmanager.getDatabaseHelper();
+        dbmanager.dropTable("t1");
+        dbmanager.dropTable("t2");
+        dbmanager.dropTable("cardsgroup_list");*/
+
+        //drawerBuilder
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.bg_card)
@@ -72,15 +88,13 @@ public class MainActivity extends AppCompatActivity {
                         new SecondaryDrawerItem().withName("Cards Group List").withIcon(R.drawable.group),
                         new SecondaryDrawerItem().withName("Editing Cards Group").withIcon(R.drawable.editing),
                         new SecondaryDrawerItem().withName("Download").withIcon(R.drawable.download),
-                        new SecondaryDrawerItem().withName("Contact us").withIcon(R.drawable.us).withEnabled(false)
+                        new SecondaryDrawerItem().withName("Contact us").withIcon(R.drawable.us).withEnabled(false),
+                        new SecondaryDrawerItem().withName("Quit").withIcon(R.drawable.us)
+
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        if (drawerItem != null && position == 1) {
-/*                            startSupportActionMode(new ActionBarCallBack());
-                            findViewById(R.id.action_mode_bar).setBackgroundColor(UIUtils.getThemeColorFromAttrOrRes(CompactHeaderDrawerActivity.this, R.attr.colorPrimary, R.color.material_drawer_primary));*/
-                        }
 
                         if (position == 3) {
                             Intent intent = new Intent(context, CardsGroupLoaderActivity.class);
@@ -94,11 +108,10 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(context, DownLoadAndInstallActivity.class);
                             startActivity(intent);
                         }
-
-/*                      if (drawerItem instanceof Nameable) {
-                            toolbar.setTitle(((Nameable) drawerItem).getName().getText(CompactHeaderDrawerActivity.this));
-                        }*/
-
+                        if (position == 6) {
+                            Intent intent = new Intent(context, DownLoadAndInstallActivity.class);
+                            finish();
+                        }
                         return false;
                     }
                 })
@@ -157,32 +170,37 @@ public class MainActivity extends AppCompatActivity {
         //dbmanager.createNewCardsGroupTab(cg);
 
 
-        toolbar= (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_main);
+        setSupportActionBar(toolbar);
         Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
 
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 String msg = "";
-                if(menuItem.getItemId() == R.id.menu_item1){
+                if (menuItem.getItemId() == R.id.menu_item1) {
                     Intent intent = new Intent(context, CardsGroupLoaderActivity.class);
                     startActivity(intent);
-                } else if(menuItem.getItemId() == R.id.menu_item2){
+                } else if (menuItem.getItemId() == R.id.menu_item2) {
                     //toolbar.setVisibility(View.GONE);
                     Intent intent = new Intent(context, SettingsActivity.class);
                     startActivity(intent);
                 }
 
-                if(!msg.equals("")) {
+                if (!msg.equals("")) {
                 }
                 return true;
             }
         };
 
         toolbar.setOnMenuItemClickListener(onMenuItemClick);
-        setSupportActionBar(toolbar);
 
+
+        Intent intent = new Intent(MainActivity.this, LongTimeNoStudyNotificationService.class);
+        intent.setAction("start");
+        startService(intent);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -207,8 +225,6 @@ public class MainActivity extends AppCompatActivity {
 
         );
     }*/
-
-
 
 
 }

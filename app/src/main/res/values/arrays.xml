@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="listentries">
+        <item>By Week</item>
         <item>By Day</item>
-        <item>By hour</item>
-        <item>By minute</item>
-        <item>By second</item>
+        <item>By Hour</item>
+        <item>By Minute</item>
     </string-array>
     <string-array name="listvalues">
         <item>1</item>

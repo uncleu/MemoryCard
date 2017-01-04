@@ -214,6 +214,7 @@ public class DataBaseManager {
             contentValues.put("name", cardsgroup.getName());
             contentValues.put("tab_name", tab_name);
             contentValues.put("create_date", TimeUtilities.getCurrentTimeInMillies());
+            contentValues.put("lastmodif_date", TimeUtilities.getCurrentTimeInMillies());
             Long id = writableDB.insert("cardsgroup_list", null, contentValues);
             Log.d(TAG, "adding card group into group list successful");
         } catch (Exception e) {
@@ -495,6 +496,26 @@ public class DataBaseManager {
         return list;
 
     }
+
+    public void updateCardsGroup(CardsGroup cardsGroup){
+            writableDB = databaseHelper.getWritableDatabase();
+
+            ContentValues cv = new ContentValues();
+            cv.put("lastmodif_date", cardsGroup.getlLastModifTimeInMillis());
+            try {
+                writableDB.update(LIST_TAB, cv, "_id=" + cardsGroup.getmId(), null);
+                Log.d(TAG, "Updating cardgroup " +
+                        cardsGroup.getmId() +
+                        " into table " +
+                        LIST_TAB +
+                        " successful");
+            } catch (Exception e) {
+                Log.e(TAG, "error during update existed cardgroup, Id = " + cardsGroup.getmId());
+                e.printStackTrace();
+            }
+
+    }
+
 
     public static boolean isTableExists(String tableName) {
 

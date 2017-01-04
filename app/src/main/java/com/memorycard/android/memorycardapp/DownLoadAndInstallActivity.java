@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -16,6 +17,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.ResultReceiver;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
@@ -34,7 +37,6 @@ import java.io.File;
 
 import utilities.DownLoadAndInstallUtilities;
 
-import static android.R.attr.id;
 
 public class DownLoadAndInstallActivity extends AppCompatActivity {
 
@@ -56,6 +58,8 @@ public class DownLoadAndInstallActivity extends AppCompatActivity {
     private Button installBtn;
     private String mFilePath;
 private Activity activity;
+private ProgressDialog progressDialog;
+
 
 
     @Override
@@ -75,14 +79,29 @@ private Activity activity;
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 if(position == 0){
+
+
                     downloadFileName = "family";
                     String s = "http://t.jgz.la/attachment/201701/0210/nanasisi-135397/5869b6b2e2f23.zip";
                     //String s = "http://t.jgz.la/attachment/201612/3005/nanasisi-135397/58658007cfef9.zip";
-                    new downloadTask().execute(s);
+                    //new downloadTask().execute(s);
+                    Intent intent = new Intent(DownLoadAndInstallActivity.this, DownLoadService.class);
+                    intent.putExtra("getDownloadFileUrl", s);
+                    intent.putExtra("filename", downloadFileName);
+                    intent.setAction("start");
+                    startService(intent);
+
                 }else if(position == 1){
+
                     downloadFileName = "food";
                     String s = "http://t.jgz.la/attachment/201701/0210/nanasisi-135397/5869b6b2ecd95.zip";
-                    new downloadTask().execute(s);
+                    //new downloadTask().execute(s);
+
+                    Intent intent = new Intent(DownLoadAndInstallActivity.this, DownLoadService.class);
+                    intent.putExtra("getDownloadFileUrl", s);
+                    intent.putExtra("filename", downloadFileName);
+                    intent.setAction("start");
+                    startService(intent);
                 }
 
             }
@@ -100,8 +119,20 @@ private Activity activity;
             }
         });
 
+
+        Button backButton = (Button)findViewById(R.id.back_to_main_menu_button);
+        backButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
     }
 
+
+        //for installation
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -111,10 +142,6 @@ private Activity activity;
 
             mFilePath = getPath(data.getData());
 
-            //int index = mFilePath.lastIndexOf(File.pathSeparator);
-
-            //String name = mFilePath.substring(index);
-
             DownLoadAndInstallUtilities.install(context,mFilePath);
 
             Toast.makeText(getApplicationContext(), "Installation Card Group successful", Toast.LENGTH_SHORT).show();
@@ -123,88 +150,9 @@ private Activity activity;
         }
     }
 
-    class downloadTask extends AsyncTask<String, Integer, String> {
-        int progres = 0;
-
-        @Override
-        protected void onPreExecute() {
-            progres = 0;
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-
-                dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-                Uri uri = Uri.parse(params[0]);
-                DownloadManager.Request req = new DownloadManager.Request(uri);
-                req.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
-                req.setDestinationInExternalFilesDir(context, Environment.DIRECTORY_DOWNLOADS,downloadFileName+".zip");
-                nodifyId = dm.enqueue(req);
-                broadCast();
-
-                for (int i = 0; i < 10; i++) {
-                    progres += 10;
-                    publishProgress(progres);
-                    Thread.sleep(250);
-                }
-                return downloadFileName;
-            } catch (Exception e) {
-                Log.e(TAG, "Error doInBackGround " + e.getMessage());
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            tet.setText(""+values[0]);
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            tet.setText("ok");
-        }
-
-        private void broadCast(){
-            IntentFilter intent = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-            BroadcastReceiver recervier = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    context.unregisterReceiver(this);
-                    long reference  = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-                    if(reference == nodifyId){
-                        DownloadManager.Query question = new DownloadManager.Query();
-                        question.setFilterById(nodifyId).setFilterByStatus(DownloadManager.STATUS_SUCCESSFUL);
-                        Cursor cur= dm.query(question);
-                        if(cur.moveToNext()){
-                            int fileNameIndex = cur.getColumnIndex(DownloadManager.COLUMN_LOCAL_FILENAME);
-                            int fUri = cur.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI);
-                            String downloadFilePath = cur.getString(fileNameIndex);
-                            uriFile = cur.getString(fUri);
-                            //Unzip
-                            File path = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
-                            File file = new File(downloadFilePath);
-                            String absoluPath = file.getAbsolutePath();
-                            //DownLoadAndInstallUtilities.Unzip.start(absoluPath, getApplicationContext());
-                            DownLoadAndInstallUtilities.unzipFunction(path.toString(),file.getAbsolutePath());
-
-                            Toast.makeText(getApplicationContext(), "Download " + downloadFileName+" Cards successful", Toast.LENGTH_SHORT).show();
 
 
-                        }
-                        cur.close();
-                    }else{
-                        Log.e(TAG, "broadcast");
-                    }
-                }
-            };
-            registerReceiver(recervier, intent);
-        }
-
-    }
-
-
-
+    //get correct file path
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private String getPath(final Uri uri) {
 

@@ -92,4 +92,8 @@
     <string name="drawer_item_contact">Contact us</string>
 
 
+    <string name="download_title">Downloading</string>
+    <string name="download_message">You have a package is being downloaded</string>
+
+
 </resources>

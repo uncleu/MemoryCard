@@ -11,4 +11,16 @@
     <include
         layout="@layout/app_toolbar" />
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="display day"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/display_day" />
+    </LinearLayout>
+
 </LinearLayout>

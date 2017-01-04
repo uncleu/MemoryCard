@@ -52,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:text="Question"
+                    android:hint="Question"
                     android:ems="10"
                     android:id="@+id/new_card_question_txt"
                     android:layout_weight="1" />
@@ -98,7 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:text="Answer"
+                    android:hint="Answer"
                     android:ems="10"
                     android:id="@+id/new_card_answer_txt" />
 

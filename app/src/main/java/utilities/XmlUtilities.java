@@ -75,7 +75,6 @@ public class XmlUtilities {
                 }
                 eventType = parser.next();
             }
-            int test = 1;
         } catch (XmlPullParserException e) {
             Log.e(TAG, "Error during Parsing xml file");
             e.printStackTrace();

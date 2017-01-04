@@ -19,72 +19,65 @@ import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 public class DownLoadAndInstallUtilities {
 
-    public static class Unzip {
+    public static void unzipFunction(String destinationFolder, String zipFile) {
+        File directory = new File(destinationFolder);
 
-        public static void start(String zipPath, Context cont){
-            String desc = zipPath.substring(0, zipPath.lastIndexOf('/'))+"/";
-            try{
-                unZipFile(zipPath, desc, cont);
-            }catch(IOException e) {
-                e.printStackTrace();
-            }
-        }
+        // if the output directory doesn't exist, create it
+        if(!directory.exists())
+            directory.mkdirs();
 
-        public static void unZipFile(String zipPath,String desc, Context cont) throws IOException{
-            unZipFile(new File(zipPath), desc, cont);
-        }
+        // buffer for read and write data to file
+        byte[] buffer = new byte[2048];
 
-        public static void unZipFile(File zipFile,String desc, Context cont) throws IOException{
-            File path = new File(desc);
-            if(!path.exists()){
-                Log.e("Unzip","Path not exist");
-                new File(desc).mkdirs();
-            }
-            ZipFile zip = null;
-            if(zipFile.exists())
-                zip = new ZipFile(zipFile);
-            Enumeration entries = zip.entries();
+        try {
+            FileInputStream fInput = new FileInputStream(zipFile);
+            ZipInputStream zipInput = new ZipInputStream(fInput);
 
-            while(entries.hasMoreElements()){
-                ZipEntry entry = (ZipEntry)entries.nextElement();
-                InputStream in = zip.getInputStream(entry);
+            ZipEntry entry = zipInput.getNextEntry();
+
+            while(entry != null){
                 String entryName = entry.getName();
-                String outPath = (desc+entryName).replaceAll("\\*", "/");
-                File file = new File(outPath.substring(0, outPath.lastIndexOf('/')));
-                //!file.exists()
-                if(!file.exists()){
-                    Log.e("Unzip","File not exist");
-                }
-                //test outPath is directory
-                if(new File(outPath).isDirectory()){
-                    continue;
-                }
-                OutputStream out = new FileOutputStream(outPath);
-                byte[] buf1 = new byte[1024];
-                int len;
-                while((len=in.read(buf1))>0){
-                    out.write(buf1,0,len);
-                }
-                in.close();
-                out.close();
-            }
-            zip.close();
+                File file = new File(destinationFolder + File.separator + entryName);
 
-            File[] tempList = path.listFiles();
-            for (int i = 0; i < tempList.length; i++) {
-                if (tempList[i].isFile()) {
-                    if(tempList[i].getName().endsWith(".xml")) {
-                        install(cont ,tempList[i].getAbsolutePath());
+                System.out.println("Unzip file " + entryName + " to " + file.getAbsolutePath());
+
+                // create the directories of the zip directory
+                if(entry.isDirectory()) {
+                    File newDir = new File(file.getAbsolutePath());
+                    if(!newDir.exists()) {
+                        boolean success = newDir.mkdirs();
+                        if(success == false) {
+                            System.out.println("Problem creating Folder");
+                        }
                     }
                 }
+                else {
+                    FileOutputStream fOutput = new FileOutputStream(file);
+                    int count = 0;
+                    while ((count = zipInput.read(buffer)) > 0) {
+                        // write 'count' bytes to the file output stream
+                        fOutput.write(buffer, 0, count);
+                    }
+                    fOutput.close();
+                }
+                // close ZipEntry and take the next one
+                zipInput.closeEntry();
+                entry = zipInput.getNextEntry();
             }
 
-            Log.d("Unzip","File Unziped");
-        }
+            // close the last ZipEntry
+            zipInput.closeEntry();
 
+            zipInput.close();
+            fInput.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void install(Context context, String path){
@@ -93,7 +86,6 @@ public class DownLoadAndInstallUtilities {
         XmlUtilities xmltool = new XmlUtilities();
         InputStream  in= null;
         try {
-            //in = getAssets().open("food.xml");
             File file = new File(path);
             in = new FileInputStream(file);
         } catch (IOException e) {

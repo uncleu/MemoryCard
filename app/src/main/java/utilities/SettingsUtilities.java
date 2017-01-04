@@ -7,7 +7,6 @@ import android.preference.PreferenceManager;
 public class SettingsUtilities {
 
     private static int getCountdownBySec(Context context){
-
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return Integer.parseInt(prefs.getString("countdown_value","30"));
     }
@@ -21,5 +20,18 @@ public class SettingsUtilities {
         return is;
     }
 
-
+    public static int getStudyFrequency(Context context){
+        SharedPreferences prefs =PreferenceManager.getDefaultSharedPreferences(context);
+        String sFrq = prefs.getString("frequency_type","4");
+        return Integer.parseInt(sFrq);
+    }
+    public static int getNoStudyFrequency(Context context){
+        SharedPreferences prefs =PreferenceManager.getDefaultSharedPreferences(context);
+        String sFrq = prefs.getString("nostudy_frequency_type","4");
+        return Integer.parseInt(sFrq);
+    }
+    public static int getNoStudyFrequencyValue(Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return Integer.parseInt(prefs.getString("nostudy_value","30"));
+    }
 }

@@ -20,7 +20,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.app.LoaderManager;
 import android.content.Loader;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.widget.Toast;
 
 import java.util.List;
@@ -73,6 +72,7 @@ public class MainCustomSettingsActivity extends ListActivity implements LoaderMa
                 getFragmentManager().beginTransaction().replace(R.id.activity_main_custom_settings, new MainCustomSettingsFragment()).commit();
             }
         });
+
 
 
         activity.getLoaderManager().initLoader(0, null, this);

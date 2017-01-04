@@ -15,13 +15,44 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/download_listview" />
+            android:layout_height="wrap_content">
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/download_listview" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/download_textview"
+                android:layout_weight="1" />
+
+            <Button
+                android:text="Install Package"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/install_button"
+                android:layout_weight="1" />
+
+            <Button
+                android:text="Back To Main Menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/back_to_main_menu_button"
+                android:onClick="Back" />
+        </LinearLayout>
+
     </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/download_textview" />
+
 </LinearLayout>

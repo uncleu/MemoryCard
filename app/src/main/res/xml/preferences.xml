@@ -1,13 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="Settings" >
-    <!-- 单独一个Switch开关 -->
+    <PreferenceCategory android:title="Set notification of long time no study ">
+        <SwitchPreference
+            android:key="switch_preference_isNotify"
+            android:summary="No study Notification ?"
+            android:summaryOff="No study Notification off"
+            android:summaryOn="No study Notification on"
+            android:switchTextOff="Off"
+            android:switchTextOn="On"
+            android:title="No study Notification ?"
+            />
+        <ListPreference
+            android:key="nostudy_frequency_type"
+            android:title="set notification interval"
+            android:summary="frequency list summary"
+            android:entries="@array/listentries"
+            android:entryValues="@array/listvalues"
+            android:defaultValue="4"
+            />
+        <EditTextPreference
+            android:defaultValue="30"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:inputType="number"
+            android:title="set time value"
+            android:key="nostudy_value" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="Using time countdown" >
         <SwitchPreference
             android:key="switch_preference_isCount"
             android:summary="Time countdown?"
-            android:summaryOff="Time countdown on"
-            android:summaryOn="Time countdown off"
+            android:summaryOff="Time countdown off"
+            android:summaryOn="Time countdown on"
             android:switchTextOff="Off"
             android:switchTextOn="On"
             android:title="Time countdown?"
@@ -27,6 +52,7 @@
             android:summary="frequency list summary"
             android:entries="@array/listentries"
             android:entryValues="@array/listvalues"
+            android:defaultValue="2"
             />
 
 </PreferenceScreen>

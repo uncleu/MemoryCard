@@ -9,22 +9,35 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.util.TimeUtils;
 import android.support.v4.view.ViewPager;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SectionDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import utilities.DataBaseManager;
 import utilities.SettingsUtilities;
+import utilities.TimeUtilities;
 
 import static android.content.ContentValues.TAG;
 
@@ -40,7 +53,7 @@ public class CardsManagerActivity extends FragmentActivity implements CardFragme
     public static int countdownValue;
     public static boolean isCountdownTimer;
     private int index;
-    public static int correctResponse = 1;
+    public static int correctResponse = 0;
 
 
     ViewPager mPager;
@@ -54,13 +67,69 @@ public class CardsManagerActivity extends FragmentActivity implements CardFragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cards_manager);
+        correctResponse = 0;//reset
         cardslist = new ArrayList<Card>();
         context = this;
         mPager = (ViewPager)findViewById(R.id.CardsViewPager);
         fragmentManager = this.getSupportFragmentManager();
         Intent intent = getIntent();
         tabName = intent.getStringExtra(CardsGroupLoaderActivity.EXTRA_TAB_NAME);
-        String cardsGroupDescription = intent.getStringExtra(CardsGroupLoaderActivity.EXTRA_CARDSGROUP_DESCRIPTION);
+        tabPosition = intent.getIntExtra(CardsGroupLoaderActivity.EXTRA_TAB_POSITION,0);
+
+
+        //drawerBuilder
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.drawable.bg_card)
+                .addProfiles(
+                        new ProfileDrawerItem().withName("Chen Si").withEmail("chensi@gmail.com").withIcon(getResources().getDrawable(R.drawable.cat))
+                )
+                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                    @Override
+                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                        return false;
+                    }
+                })
+                .build();
+
+
+        new DrawerBuilder(this)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName("Home").withIcon(R.drawable.profile),
+                        new SectionDrawerItem().withName("SectiongDrawer"),
+                        new SecondaryDrawerItem().withName("Cards Group List").withIcon(R.drawable.group),
+                        new SecondaryDrawerItem().withName("Editing Cards Group").withIcon(R.drawable.editing),
+                        new SecondaryDrawerItem().withName("Download").withIcon(R.drawable.download),
+                        new SecondaryDrawerItem().withName("Contact us").withIcon(R.drawable.us).withEnabled(false),
+                        new SecondaryDrawerItem().withName("Quit").withIcon(R.drawable.us)
+
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+
+                        if (position == 3) {
+                            Intent intent = new Intent(context, CardsGroupLoaderActivity.class);
+                            startActivity(intent);
+                        }
+                        if (position == 4) {
+                            Intent intent = new Intent(context, MainCustomSettingsActivity.class);
+                            startActivity(intent);
+                        }
+                        if (position == 5) {
+                            Intent intent = new Intent(context, DownLoadAndInstallActivity.class);
+                            startActivity(intent);
+                        }
+                        if (position == 6) {
+                            Intent intent = new Intent(context, DownLoadAndInstallActivity.class);
+                            finish();
+                        }
+                        return false;
+                    }
+                })
+                .withSavedInstance(savedInstanceState)
+                .withAccountHeader(headerResult)
+                .build();
 
 
         isCountdownTimer = SettingsUtilities.isCountdownTimerOn(context);
@@ -104,6 +173,8 @@ public class CardsManagerActivity extends FragmentActivity implements CardFragme
 
         super.onStop();
 
+
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
@@ -115,10 +186,19 @@ public class CardsManagerActivity extends FragmentActivity implements CardFragme
     public void onBackPressed() {
         //update late modification date
 
+        CardsGroup mCardsGroup =new CardsGroup();
+        mCardsGroup.setlLastModifTimeInMillis(TimeUtilities.getCurrentTimeInMillies());
+        mCardsGroup.setTab_name(tabName);
+
+        DataBaseManager dbmanager = DataBaseManager.getDbManager(context);
+        dbmanager.updateCardsGroup(mCardsGroup);
+
+
         Intent intent=getIntent();
         Bundle bundle = new Bundle();
-        bundle.putInt("progressValue",correctResponse );
+        bundle.putInt("correctResponse",correctResponse );
         bundle.putInt("total",cardslist.size() );
+        bundle.putInt("position",tabPosition );
         intent.putExtras(bundle);
         setResult(RESULT_OK, intent);
         finish();
@@ -192,7 +272,6 @@ public class CardsManagerActivity extends FragmentActivity implements CardFragme
 
 
     private class CardFragmentAdapter extends FragmentStatePagerAdapter {
-
 
         public CardFragmentAdapter(FragmentManager fm){
             super(fm);
