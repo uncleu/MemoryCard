@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Memrise</string>
+    <string name="app_name">Memorise</string>
     <string name="title_activity_cards_group_list">CardsGroupListActivity</string>
     <string name="action_settings">Settings</string>
     <string name="button_list">Start</string>

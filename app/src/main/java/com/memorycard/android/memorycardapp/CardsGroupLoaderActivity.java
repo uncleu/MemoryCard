@@ -101,7 +101,7 @@ public class CardsGroupLoaderActivity extends ListActivity implements LoaderMana
         new DrawerBuilder(this)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName("Home").withIcon(R.drawable.profile),
-                        new SectionDrawerItem().withName("Memrise Section"),
+                        new SectionDrawerItem().withName("Memorise Section"),
                         new SecondaryDrawerItem().withName("Cards Group List").withIcon(R.drawable.group),
                         new SecondaryDrawerItem().withName("Editing Cards Group").withIcon(R.drawable.editing),
                         new SecondaryDrawerItem().withName("Download").withIcon(R.drawable.download),
