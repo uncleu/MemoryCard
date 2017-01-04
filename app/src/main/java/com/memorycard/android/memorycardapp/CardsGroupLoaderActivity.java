@@ -11,6 +11,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
@@ -100,11 +101,11 @@ public class CardsGroupLoaderActivity extends ListActivity implements LoaderMana
         new DrawerBuilder(this)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName("Home").withIcon(R.drawable.profile),
-                        new SectionDrawerItem().withName("SectiongDrawer"),
+                        new SectionDrawerItem().withName("SectionDrawer"),
                         new SecondaryDrawerItem().withName("Cards Group List").withIcon(R.drawable.group),
                         new SecondaryDrawerItem().withName("Editing Cards Group").withIcon(R.drawable.editing),
                         new SecondaryDrawerItem().withName("Download").withIcon(R.drawable.download),
-                        new SecondaryDrawerItem().withName("Contact us").withIcon(R.drawable.us).withEnabled(false),
+                        new SecondaryDrawerItem().withName("Contact us").withIcon(R.drawable.us),
                         new SecondaryDrawerItem().withName("Quit").withIcon(R.drawable.us)
 
                 )
@@ -125,7 +126,13 @@ public class CardsGroupLoaderActivity extends ListActivity implements LoaderMana
                             startActivity(intent);
                         }
                         if (position == 6) {
-                            Intent intent = new Intent(context, DownLoadAndInstallActivity.class);
+                            new AlertDialog.Builder(CardsGroupLoaderActivity.this)
+                                    .setTitle("Group Projet")
+                                    .setMessage("CHEN Si"+"\n"+"GUAN Liang")
+                                    .setPositiveButton("BACK", null)
+                                    .show();
+                        }
+                        if (position == 7) {
                             finish();
                         }
                         return false;

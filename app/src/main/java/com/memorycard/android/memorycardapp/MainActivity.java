@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -74,11 +75,11 @@ public class MainActivity extends AppCompatActivity {
         new DrawerBuilder(this)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName("Home").withIcon(R.drawable.profile),
-                        new SectionDrawerItem().withName("SectiongDrawer"),
+                        new SectionDrawerItem().withName("SectionDrawer"),
                         new SecondaryDrawerItem().withName("Cards Group List").withIcon(R.drawable.group),
                         new SecondaryDrawerItem().withName("Editing Cards Group").withIcon(R.drawable.editing),
                         new SecondaryDrawerItem().withName("Download").withIcon(R.drawable.download),
-                        new SecondaryDrawerItem().withName("Contact us").withIcon(R.drawable.us).withEnabled(false),
+                        new SecondaryDrawerItem().withName("Contact us").withIcon(R.drawable.us),
                         new SecondaryDrawerItem().withName("Quit").withIcon(R.drawable.us)
 
                 )
@@ -98,9 +99,15 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(context, DownLoadAndInstallActivity.class);
                             startActivity(intent);
                         }
-                        if (position == 6) {
-                            Intent intent = new Intent(context, DownLoadAndInstallActivity.class);
-                            finish();
+                        if(position == 6) {
+                            new AlertDialog.Builder(MainActivity.this)
+                                    .setTitle("Group Projet")
+                                    .setMessage("CHEN Si"+"\n"+"GUAN Liang")
+                                    .setPositiveButton("BACK", null)
+                                    .show();
+                        }
+                        if (position == 7) {
+                            //finish();
                         }
                         return false;
                     }
