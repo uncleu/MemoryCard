@@ -36,6 +36,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import java.util.ArrayList;
 import java.util.List;
 
+import utilities.CardsFilter;
 import utilities.DataBaseManager;
 import utilities.SettingsUtilities;
 import utilities.TimeUtilities;
@@ -248,7 +249,7 @@ public class CardsManagerActivity extends FragmentActivity implements CardFragme
 
             DataBaseManager dbmanager = DataBaseManager.getDbManager(context);
             cardslist = dbmanager.loadCardsByTabName(tabName);
-            return cardslist;
+            return CardsFilter.filterCardsNoDisplay(cardslist,MainActivity.day);
         }
 
 

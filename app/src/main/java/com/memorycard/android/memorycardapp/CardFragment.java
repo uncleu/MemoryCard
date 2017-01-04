@@ -144,9 +144,9 @@ public class CardFragment extends Fragment {
         //image
         imageView = (ImageView)v.findViewById(R.id.image_question);
         byte[] bytes =mCard.getMblobQuestion();
-        imageView.setImageBitmap(ImageUtilities.BytesToBimap(bytes));
-
-
+        if(bytes != null && bytes.length !=0 ){
+            imageView.setImageBitmap(ImageUtilities.BytesToBimap(bytes));
+        }
 
         if(mCard.getmDifficultyScore()>0)
                     isDifficult.setChecked(true);
@@ -159,6 +159,10 @@ public class CardFragment extends Fragment {
                     txtResult.setText("Congratulations!");
                     txtResult.setTextColor(Color.rgb(0, 238, 118));
                     CardsManagerActivity.correctResponse++; //test
+                    int myDay = mCard.getmDay();
+                    if(myDay ==0)
+                        myDay =1;
+                    mCard.setmDay(myDay+1);
                 }
                 else{
                     txtResult.setText("Try again!");
@@ -191,8 +195,7 @@ public class CardFragment extends Fragment {
                             Toast.LENGTH_SHORT).show();
                             mCard.setmDifficultyScore(0);
                 }
-
-                dbmanager.updateCard(mCard);
+                //dbmanager.updateCard(mCard);
             }
 
         });
@@ -231,7 +234,8 @@ public class CardFragment extends Fragment {
         super.onPause();
         if (countDownTimer != null)
                 countDownTimer.cancel();
-
+        if(dbmanager != null)
+            dbmanager.updateCard(mCard);
     }
     @Override
     public void onDetach() {

@@ -41,7 +41,6 @@ public class XmlUtilities {
                 switch (eventType) {
                     case XmlPullParser.START_TAG:
                         if (tagname.equalsIgnoreCase("cards")) {
-                            // create a new instance of employee
                             newCardsGroup.setName(parser.getAttributeValue(0));
                             newCardsGroup.setDiscription(parser.getAttributeValue(0));
 
@@ -57,7 +56,6 @@ public class XmlUtilities {
 
                     case XmlPullParser.END_TAG:
                         if (tagname.equalsIgnoreCase("card")) {
-                            // add employee object to list
                             newCardsGroup.addCard(newCard);
                         } else if (tagname.equalsIgnoreCase("txtquestion")) {
                             newCard.setMtxtQuestion(text);

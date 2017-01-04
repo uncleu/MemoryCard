@@ -6,11 +6,13 @@ import android.content.pm.PackageManager;
 import android.support.v4.util.TimeUtils;
 import android.util.Log;
 
+import com.memorycard.android.memorycardapp.Card;
 import com.memorycard.android.memorycardapp.CardsGroup;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import static utilities.TimeUtilities.convertToMillisByFrequence;
@@ -35,21 +37,6 @@ public class CardsFilter {
     }
 
 
-    public static int getCurrentStudyDay(Context context) {
-
-        int frequency = SettingsUtilities.getStudyFrequency(context);
-
-        long lFrequency = TimeUtilities.convertToMillisByFrequence(frequency,1);
-
-        long installTime = TimeUtilities.getInstallDate(context);
-
-        long currentTime = TimeUtilities.getCurrentTimeInMillies();
-
-        int day = new Long((currentTime-installTime)%lFrequency).intValue();
-
-        return day;
-
-    }
 
     public static int getCurrentDayofStudy(Context context) {
 
@@ -62,7 +49,7 @@ public class CardsFilter {
         long currentTime = TimeUtilities.getCurrentTimeInMillies();
 
 
-        int day = ((currentTime-installTime)/lFrequency)>0?1:new Long((currentTime-installTime)/lFrequency).intValue();
+        int day = ((currentTime-installTime)/lFrequency)>0?new Long((currentTime-installTime)/lFrequency).intValue():1;
 
         return day;
 
@@ -99,4 +86,25 @@ public class CardsFilter {
         return isExceed;
     }
 
+    private static boolean checkCardDisplay(Card card,int day) {
+
+        if((card.getmDay() == day) || card.getmDifficultyScore() != 0){
+            return true;
+        }
+        return  false;
+    }
+
+
+    public static List<Card> filterCardsNoDisplay(List<Card> cardList,int day){
+        Iterator<Card> it = cardList.iterator();
+
+        while(it.hasNext()){
+            Card card = it.next();
+            if(!checkCardDisplay(card,day)){
+                it.remove();
+            }
+        }
+
+        return cardList;
+    }
 }

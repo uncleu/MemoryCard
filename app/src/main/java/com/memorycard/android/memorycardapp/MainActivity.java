@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
 
-                if (!msg.equals("")) {
+                if (!"".equals(msg)) {
                 }
                 return true;
             }

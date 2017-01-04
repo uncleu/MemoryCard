@@ -77,19 +77,21 @@ public class CardCustomSettingsActivity extends AppCompatActivity{
                     card.setMtxtQuestion(txtQuestion.getText().toString());
                     check = true;
                 }
-                if(txtAnswer != null && !"".equals(txtAnswer.getText().toString())){
-                    card.setMtxtAnswer(txtAnswer.getText().toString());
-                }
                 if(bitmap != null){
                     check = true;
                     card.setMblobQuestion(ImageUtilities.BitmapToBytes(bitmap));
                 }
-
+                else{
+                    check = false;
+                }
+                if(check ==true&&txtAnswer != null && !"".equals(txtAnswer.getText().toString())){
+                    card.setMtxtAnswer(txtAnswer.getText().toString());
+                }
                 if(check){
                     UpdateCardTask mytask = new UpdateCardTask();
                     mytask.execute();
                 }else{
-                    Toast.makeText(context,"update card failed!",Toast.LENGTH_SHORT);
+                    Toast.makeText(context,"update card failed! Answer/Question can't be null",Toast.LENGTH_SHORT).show();
                 }
 
 
