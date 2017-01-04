@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         new DrawerBuilder(this)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName("Home").withIcon(R.drawable.profile),
-                        new SectionDrawerItem().withName("SectionDrawer"),
+                        new SectionDrawerItem().withName("Memrise Section"),
                         new SecondaryDrawerItem().withName("Cards Group List").withIcon(R.drawable.group),
                         new SecondaryDrawerItem().withName("Editing Cards Group").withIcon(R.drawable.editing),
                         new SecondaryDrawerItem().withName("Download").withIcon(R.drawable.download),
