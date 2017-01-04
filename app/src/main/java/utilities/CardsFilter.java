@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.memorycard.android.memorycardapp.CardsGroup;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -72,7 +73,13 @@ public class CardsFilter {
 
         for(CardsGroup cardsGroup:cardsGroupList){
             if(isNoStudyTimeExceed(context,cardsGroup)){
-                listname.add(cardsGroup.getName());
+                long lastModif = cardsGroup.getlLastModifTimeInMillis();
+                long currentTime = TimeUtilities.getCurrentTimeInMillies();
+                long diff = currentTime - lastModif;
+                SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+                Date date = new Date(diff);
+                String res = cardsGroup.getName()+" : " +formatter.format(date);
+                listname.add(res);
             }
         }
 

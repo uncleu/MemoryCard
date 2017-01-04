@@ -57,6 +57,7 @@ public class CardFragment extends Fragment {
     private CountDownTimer countDownTimer=null;
     private ImageView imageView;
 
+
     private OnFragmentInteractionListener mListener;
 
     public CardFragment() {
@@ -130,6 +131,7 @@ public class CardFragment extends Fragment {
         txtAnswer = (EditText)v.findViewById(R.id.card_txt_answer);
         txtQuestion = (TextView)v.findViewById(R.id.card_txt_question);
         Button checkButton = (Button)v.findViewById(R.id.check_button);
+        Button indi = (Button)v.findViewById(R.id.indi);
         isDifficult = (CheckBox)v.findViewById(R.id.is_difficult);
         txtResult = (TextView)v.findViewById(R.id.txt_result);
         timeCountDown = (TextView)v.findViewById(R.id.time_count_down);
@@ -164,6 +166,13 @@ public class CardFragment extends Fragment {
                 }
 
                 dbmanager.updateCard(mCard);
+            }
+        });
+
+        indi.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context,rightAnswer,Toast.LENGTH_SHORT).show();
             }
         });
 

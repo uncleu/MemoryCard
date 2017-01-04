@@ -75,15 +75,15 @@ public class LongTimeNoStudyNotificationService extends Service {
                 if(cardsgrouplist != null && cardsgrouplist.size()>0){
                     List<String>namelist = CardsFilter.getNoStudyLongTimeGroupList(context,cardsgrouplist);
 
-                    String title = "haven't been studied for a while";
+                    String title = "Memorise";
                     String message = "";
                     for(String name : namelist){
-                        message += name + ", \n";
+                        message += name + "\n";
                     }
-                    message += "upon MemoryCard Groups haven't been studied for a while";
+                    message += "Upon MemoryCard Groups haven't been studied for a while";
                     NotificationCompat.BigTextStyle inboxStyle = new NotificationCompat.BigTextStyle();
                     inboxStyle.setBigContentTitle(title);
-                    inboxStyle.setSummaryText(message);
+                    inboxStyle.setSummaryText("Memorise Notification");
                     displayNotificationMessage(title,message,inboxStyle);
                 }
             } catch (Exception e) {
