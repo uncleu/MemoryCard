@@ -93,7 +93,7 @@ public class LongTimeNoStudyNotificationService extends Service {
 
 
         private void displayNotificationMessage(String titile, String message, NotificationCompat.BigTextStyle inboxStyle) {
-            Bitmap aBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_notification_start);
+            Bitmap aBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.notification);
 
             Notification notification = new NotificationCompat.Builder(context)
                     .setContentTitle(titile)

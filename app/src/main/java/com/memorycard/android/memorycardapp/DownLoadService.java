@@ -136,7 +136,7 @@ public class DownLoadService extends Service {
         }
     }
     private void displayNotificationMessage(String message) {
-        Bitmap aBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_notification_start);
+        Bitmap aBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.downloadicon);
 
         Notification notification = new NotificationCompat.Builder(context)
                 .setContentTitle(message)

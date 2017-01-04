@@ -37,11 +37,8 @@ import utilities.XmlUtilities;
 
 public class MainActivity extends AppCompatActivity {
 
-
     private Context context;
     private Toolbar toolbar;
-    private Button start;
-    private Button start2;
 
     public static int day;
 
@@ -57,13 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
         TextView displayDay = (TextView) findViewById(R.id.display_day);
         displayDay.setText(Integer.toString(day));
-
-
-/*        DataBaseManager dbmanager = DataBaseManager.getDbManager(this);
-        MemoryCardDataBaseHelper helper = dbmanager.getDatabaseHelper();
-        dbmanager.dropTable("t1");
-        dbmanager.dropTable("t2");
-        dbmanager.dropTable("cardsgroup_list");*/
 
         //drawerBuilder
         AccountHeader headerResult = new AccountHeaderBuilder()
