@@ -11,16 +11,49 @@
     <include
         layout="@layout/app_toolbar" />
 
-    <LinearLayout
-        android:orientation="vertical"
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="4"/>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_weight="5">
+
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="2"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="35sp"
+            android:textColor="#283593"
+            android:text="Day"
+            android:gravity="center_horizontal"
+            android:layout_weight="1"/>
 
         <TextView
             android:text="display day"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:textColor="#FDD835"
+            android:textSize="35sp"
+            android:gravity="center_horizontal"
             android:layout_height="wrap_content"
-            android:id="@+id/display_day" />
+            android:id="@+id/display_day"
+            android:layout_weight="1"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="2"/>
+
     </LinearLayout>
 
 </LinearLayout>

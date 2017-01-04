@@ -49,7 +49,6 @@ public class DownLoadAndInstallActivity extends AppCompatActivity {
     private ListView listView;
     private DownloadManager dm;
     private Long nodifyId;
-    private TextView tet;
     private String uriFile;
     private Notification baseNF;
     private NotificationManager nm;
@@ -57,8 +56,8 @@ public class DownLoadAndInstallActivity extends AppCompatActivity {
     private ArrayAdapter<String> listAdapter;
     private Button installBtn;
     private String mFilePath;
-private Activity activity;
-private ProgressDialog progressDialog;
+    private Activity activity;
+    private ProgressDialog progressDialog;
 
 
 
@@ -69,7 +68,6 @@ private ProgressDialog progressDialog;
 
          context = getApplicationContext();
         activity = this;
-        tet = (TextView)findViewById(R.id.download_textview);
 
         listView = (ListView)findViewById(R.id.download_listview);
         listAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,list);

@@ -119,57 +119,6 @@ public class MainActivity extends AppCompatActivity {
                 .withAccountHeader(headerResult)
                 .build();
 
-
-        ///////
-
-/*        start = (Button)findViewById(R.id.list_button);
-        start2 = (Button)findViewById(R.id.start2_button);
-
-        start.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, MainCustomSettingsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        start2.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, CardsGroupLoaderActivity.class);
-                startActivity(intent);
-            }
-        });*/
-
-        //initToolBar();
-/*        XmlUtilities xmltool = new XmlUtilities();
-        InputStream  in= null;
-        try {
-            //in = getAssets().open("food.xml");
-            in = getAssets().open("family.xml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        CardsGroup cg= xmltool.xmlReader(in);
-        cg.getTotal();
-
-        DataBaseManager dbmanager = DataBaseManager.getDbManager(this);
-        MemoryCardDataBaseHelper helper = dbmanager.getDatabaseHelper();*/
- /*      dbmanager.dropTable("t1");
-        dbmanager.dropTable("t2");
-        dbmanager.dropTable("t3");
-        dbmanager.dropTable("t4");
-        dbmanager.dropTable("t5");
-        dbmanager.dropTable("t6");
-        dbmanager.dropTable("t7");
-        dbmanager.dropTable("t8");
-        dbmanager.dropTable("t9");
-        dbmanager.dropTable("t10");
-        dbmanager.dropTable("t11");
-        dbmanager.dropTable("cardsgroup_list");*/
-        //dbmanager.createNewCardsGroupTab(cg);
-
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_main);
         setSupportActionBar(toolbar);

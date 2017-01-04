@@ -5,6 +5,7 @@
     xmlns:indicator="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#7986CB"
     tools:context="com.memorycard.android.memorycardapp.MainCustomSettingsActivity"
     android:orientation="vertical">
 
@@ -35,17 +36,18 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="create new group package"
+                android:text="Create New Group Package"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:id="@+id/textView2" />
-
-
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/add_new_group_button2"
+                android:textColor="#FFFFFF"
+                android:background="#9E9E9E"
                 android:text="add new group" />
 
         </LinearLayout>

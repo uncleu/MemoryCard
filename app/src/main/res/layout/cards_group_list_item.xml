@@ -62,7 +62,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/text_tot"
                 android:gravity="center_horizontal"
-                android:textColor="#FFFFFF"
+                android:textColor="#283593"
                 android:textSize="25sp"
                 android:layout_weight="1" />
 

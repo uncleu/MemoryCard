@@ -14,10 +14,6 @@ import java.util.List;
 
 import static utilities.TimeUtilities.convertToMillisByFrequence;
 
-/**
- * Created by yina on 2017/1/2.
- */
-
 public class CardsFilter {
 
     private static final String TAG = "CardsFilter";

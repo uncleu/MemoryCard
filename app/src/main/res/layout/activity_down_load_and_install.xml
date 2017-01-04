@@ -8,17 +8,17 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:background="#7986CB"
     tools:context="com.memorycard.android.memorycardapp.DownLoadAndInstallActivity">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="2">
 
             <ListView
                 android:layout_width="match_parent"
@@ -29,30 +29,43 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp"/>
 
             <TextView
-                android:text="TextView"
+                android:text="@string/progress_text"
                 android:layout_width="match_parent"
+                android:gravity="center_horizontal"
                 android:layout_height="wrap_content"
-                android:id="@+id/download_textview"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="20sp" />
 
             <Button
                 android:text="Install Package"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/install_button"
+                android:textColor="#FFFFFF"
+                android:background="#9E9E9E"
                 android:layout_weight="1" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp"/>
 
             <Button
                 android:text="Back To Main Menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/back_to_main_menu_button"
+                android:layout_weight="1"
+                android:textColor="#FFFFFF"
+                android:background="#9E9E9E"
                 android:onClick="Back" />
         </LinearLayout>
-
-    </LinearLayout>
 
 </LinearLayout>

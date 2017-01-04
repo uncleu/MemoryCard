@@ -32,9 +32,7 @@ import utilities.DownLoadAndInstallUtilities;
 public class DownLoadService extends Service {
     private static final String TAG = "DownLoadService";
     private NotificationManager notificationMgr;
-    private ThreadGroup myThreads = new ThreadGroup("ServiceWorker");//可以持续的添加任务
-/*    private String downloadFileName;
-    private String getDownloadFileUrl;*/
+    private ThreadGroup myThreads = new ThreadGroup("ServiceWorker");
     private DownloadManager dm;
     private Context context;
     private Long nodifyId;
@@ -120,7 +118,7 @@ public class DownLoadService extends Service {
                         if(cur.moveToNext()){
                             int fileNameIndex = cur.getColumnIndex(DownloadManager.COLUMN_LOCAL_FILENAME);
                             String downloadFilePath = cur.getString(fileNameIndex);
-                            //Unzip
+                            //unzip
                             File path = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
                             File file = new File(downloadFilePath);
                             DownLoadAndInstallUtilities.unzipFunction(path.toString(),file.getAbsolutePath());
