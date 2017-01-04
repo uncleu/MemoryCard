@@ -18,7 +18,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SectionDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import utilities.CircleIndicator;
@@ -41,7 +53,7 @@ public class CardsGroupLoaderActivity extends ListActivity implements LoaderMana
 
 
     public static final String EXTRA_TAB_NAME = "com.memorycard.android.memorycardapp.extra_tabname";
-    public static final String EXTRA_CARDSGROUP_DESCRIPTION = "com.memorycard.android.memorycardapp.extra_cardsgroup_description";
+    public static final String EXTRA_TAB_POSITION = "com.memorycard.android.memorycardapp.extra_tabposition";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +79,61 @@ public class CardsGroupLoaderActivity extends ListActivity implements LoaderMana
 
             }
         });
+
+
+        //drawerBuilder
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.drawable.bg_card)
+                .addProfiles(
+                        new ProfileDrawerItem().withName("Chen Si").withEmail("chensi@gmail.com").withIcon(getResources().getDrawable(R.drawable.cat))
+                )
+                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                    @Override
+                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                        return false;
+                    }
+                })
+                .build();
+
+
+        new DrawerBuilder(this)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName("Home").withIcon(R.drawable.profile),
+                        new SectionDrawerItem().withName("SectiongDrawer"),
+                        new SecondaryDrawerItem().withName("Cards Group List").withIcon(R.drawable.group),
+                        new SecondaryDrawerItem().withName("Editing Cards Group").withIcon(R.drawable.editing),
+                        new SecondaryDrawerItem().withName("Download").withIcon(R.drawable.download),
+                        new SecondaryDrawerItem().withName("Contact us").withIcon(R.drawable.us).withEnabled(false),
+                        new SecondaryDrawerItem().withName("Quit").withIcon(R.drawable.us)
+
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+
+                        if (position == 3) {
+                            Intent intent = new Intent(context, CardsGroupLoaderActivity.class);
+                            startActivity(intent);
+                        }
+                        if (position == 4) {
+                            Intent intent = new Intent(context, MainCustomSettingsActivity.class);
+                            startActivity(intent);
+                        }
+                        if (position == 5) {
+                            Intent intent = new Intent(context, DownLoadAndInstallActivity.class);
+                            startActivity(intent);
+                        }
+                        if (position == 6) {
+                            Intent intent = new Intent(context, DownLoadAndInstallActivity.class);
+                            finish();
+                        }
+                        return false;
+                    }
+                })
+                .withSavedInstance(savedInstanceState)
+                .withAccountHeader(headerResult)
+                .build();
 
         LoadCardsGroupListTask mytask = new LoadCardsGroupListTask();
         mytask.execute();
@@ -126,8 +193,7 @@ public class CardsGroupLoaderActivity extends ListActivity implements LoaderMana
         Intent intent = new Intent(this, CardsManagerActivity.class);
 
         intent.putExtra(EXTRA_TAB_NAME,tabname);
-        intent.putExtra(EXTRA_CARDSGROUP_DESCRIPTION,desc);
-        //startActivity(intent);
+        intent.putExtra(EXTRA_TAB_POSITION,position);
         startActivityForResult(intent,CALLBACK_REQUEST);
     }
 
@@ -139,7 +205,7 @@ public class CardsGroupLoaderActivity extends ListActivity implements LoaderMana
             if (resultCode == RESULT_OK) {
                 // The Intent's data Uri identifies which contact was selected.
                 //update progressvalue
-                int progressValue = data.getIntExtra("progressValue",1);
+                int progressValue = data.getIntExtra("correctResponse",1);
                 int total = data.getIntExtra("total",1);
                 int result = progressValue*100/total;
 
@@ -147,6 +213,12 @@ public class CardsGroupLoaderActivity extends ListActivity implements LoaderMana
                 ald.setText(String.valueOf(progressValue));
 
                 progressCircle.setProgress(result);
+
+                //update actual accuracy
+                int position  = data.getIntExtra("position",1);
+                CardsGroup mcg = mCardsGroupsList.get(position);
+                mcg.setAccuracy(progressValue);
+                mCardsGroupsList.set(position,mcg);
 
             }
         }
