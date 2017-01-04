@@ -106,7 +106,7 @@ public class MainCustomSettingsActivity extends ListActivity implements LoaderMa
                 DataBaseManager dataBaseManager = DataBaseManager.getDbManager(context);
                 dataBaseManager.deleteCardsGroupFromDataBase(getContentResolver(),tab_name);
                 activity.getLoaderManager().restartLoader(0, null, this);
-                Toast.makeText(context,"delete cards group successful",Toast.LENGTH_SHORT);
+                Toast.makeText(context,"Delete cards group successful",Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onContextItemSelected(item);

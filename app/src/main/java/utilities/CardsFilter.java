@@ -75,7 +75,7 @@ public class CardsFilter {
             if(isNoStudyTimeExceed(context,cardsGroup)){
                 long lastModif = cardsGroup.getlLastModifTimeInMillis();
                 long currentTime = TimeUtilities.getCurrentTimeInMillies();
-                long diff = currentTime - lastModif;
+                long diff = currentTime - lastModif - 60*60*1000;
                 SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
                 Date date = new Date(diff);
                 String res = cardsGroup.getName()+" : " +formatter.format(date);
