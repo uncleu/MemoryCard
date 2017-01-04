@@ -43,7 +43,7 @@ import static android.content.ContentValues.TAG;
 public class CardsGroupLoaderActivity extends ListActivity implements LoaderManager.LoaderCallbacks<Cursor>  {
 
     private ListView listView;
-    private static List<CardsGroup>mCardsGroupsList;
+    private static ArrayList<CardsGroup>mCardsGroupsList;
     private Context context;
     private ProgressCircle progressCircle;
     private TextView tot;
@@ -142,12 +142,31 @@ public class CardsGroupLoaderActivity extends ListActivity implements LoaderMana
                 .withAccountHeader(headerResult)
                 .build();
 
-        LoadCardsGroupListTask mytask = new LoadCardsGroupListTask();
-        mytask.execute();
+            LoadCardsGroupListTask mytask = new LoadCardsGroupListTask();
+            mytask.execute();
+
     }
 
 
-    private class LoadCardsGroupListTask extends AsyncTask<String,Integer,List<CardsGroup>> {
+
+    @Override
+    protected void onRestoreInstanceState(Bundle state)
+    {
+        super.onRestoreInstanceState(state);
+        Log.e(TAG, "onRestoreInstanceState");
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        Log.e(TAG, "onSaveInstanceState");
+
+        outState.putSerializable("rotFlag", 1);
+
+    }
+
+
+    private class LoadCardsGroupListTask extends AsyncTask<String,Integer,ArrayList<CardsGroup>> {
 
         @Override
         protected void onPreExecute() {
@@ -156,15 +175,15 @@ public class CardsGroupLoaderActivity extends ListActivity implements LoaderMana
         }
 
         @Override
-        protected List<CardsGroup> doInBackground(String... params) {
+        protected ArrayList<CardsGroup> doInBackground(String... params) {
             DataBaseManager dbmanager = DataBaseManager.getDbManager(context);
-            List<CardsGroup> list = dbmanager.loadCardsGroupList();
+            ArrayList<CardsGroup> list = dbmanager.loadCardsGroupList();
             return list;
         }
 
 
         @Override //update UI list
-        protected void onPostExecute(List<CardsGroup> result)
+        protected void onPostExecute(ArrayList<CardsGroup> result)
         {
             super.onPostExecute(result);
             mCardsGroupsList = result;

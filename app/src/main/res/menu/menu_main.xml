@@ -2,10 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
-
-    <item android:title="Back to Game List"
-        android:id="@+id/menu_item1"
-        app:showAsAction="never"/>
     <item android:title="Configuration"
         android:id="@+id/menu_item2"
         app:showAsAction="never"/>

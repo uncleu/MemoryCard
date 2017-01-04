@@ -46,15 +46,13 @@ import static android.content.ContentValues.TAG;
 public class CardsManagerActivity extends FragmentActivity implements CardFragment.OnFragmentInteractionListener {
 
     private static List<Card> cardslist;
-    String tabName;
-    int tabPosition;
+    static String  tabName;
+    static int tabPosition;
     public Context context;
     private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
 
     public static int countdownValue;
     public static boolean isCountdownTimer;
-    private int index;
     public static int correctResponse = 0;
 
 
@@ -70,7 +68,7 @@ public class CardsManagerActivity extends FragmentActivity implements CardFragme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cards_manager);
         correctResponse = 0;//reset
-        cardslist = new ArrayList<Card>();
+        cardslist = new ArrayList<>();
         context = this;
         mPager = (ViewPager)findViewById(R.id.CardsViewPager);
         fragmentManager = this.getSupportFragmentManager();

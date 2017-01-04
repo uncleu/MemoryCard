@@ -366,7 +366,11 @@ public class DataBaseManager {
                 card.setmGroupId(cursor.getInt(1));//groupId
                 card.setMtabName(tabName);
                 card.setmDifficultyScore(cursor.getInt(3));
-                card.setmDay(cursor.getInt(4));
+                card.setmDay(cursor.getInt(4));//
+                if(cursor.getInt(4)==0){
+                    card.setmDay(1);
+                } else
+                    card.setmDay(cursor.getInt(4));
                 card.setMtxtQuestion(cursor.getString(5));
                 card.setMtxtAnswer(cursor.getString(6));
                 byte[] bytes = cursor.getBlob(7);
@@ -465,8 +469,8 @@ public class DataBaseManager {
     }
 
 
-    public List<CardsGroup> loadCardsGroupList() {
-        List<CardsGroup> list = new ArrayList<>();
+    public ArrayList<CardsGroup> loadCardsGroupList() {
+        ArrayList<CardsGroup> list = new ArrayList<>();
 
         try {
             readableDB = databaseHelper.getReadableDatabase();

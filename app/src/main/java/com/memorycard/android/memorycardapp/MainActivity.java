@@ -4,15 +4,12 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 
@@ -124,10 +121,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 String msg = "";
-                if (menuItem.getItemId() == R.id.menu_item1) {
-                    Intent intent = new Intent(context, CardsGroupLoaderActivity.class);
-                    startActivity(intent);
-                } else if (menuItem.getItemId() == R.id.menu_item2) {
+                if (menuItem.getItemId() == R.id.menu_item2) {
                     //toolbar.setVisibility(View.GONE);
                     Intent intent = new Intent(context, SettingsActivity.class);
                     startActivity(intent);
@@ -153,24 +147,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
-/*    public void initToolBar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.toolbarTitle);
-
-        setSupportActionBar(toolbar);
-
-        toolbar.setNavigationIcon(R.drawable.ic_toolbar_arrow);
-        toolbar.setNavigationOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(AndroidToolbarExample.this, "clicking the toolbar!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-        );
-    }*/
 
 
 }
