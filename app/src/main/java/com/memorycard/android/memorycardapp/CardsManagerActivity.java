@@ -247,7 +247,8 @@ public class CardsManagerActivity extends FragmentActivity implements CardFragme
 
             DataBaseManager dbmanager = DataBaseManager.getDbManager(context);
             cardslist = dbmanager.loadCardsByTabName(tabName);
-            return CardsFilter.filterCardsNoDisplay(cardslist,MainActivity.day);
+            List<Card> newlist = CardsFilter.filterCardsNoDisplay(cardslist,MainActivity.day);
+            return cardslist;
         }
 
 

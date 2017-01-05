@@ -51,7 +51,8 @@ public class CardsFilter {
 
         int day = ((currentTime-installTime)/lFrequency)>0?new Long((currentTime-installTime)/lFrequency).intValue():1;
 
-        return day;
+
+        return 1;
 
     }
 

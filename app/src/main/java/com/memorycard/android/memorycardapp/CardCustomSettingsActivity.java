@@ -66,7 +66,7 @@ public class CardCustomSettingsActivity extends AppCompatActivity{
 
             @Override
             public void onClick(View v) {
-                boolean check = false;
+                boolean check = true;
 
                 //generate card
                 card = new Card();
@@ -75,22 +75,16 @@ public class CardCustomSettingsActivity extends AppCompatActivity{
                 card.setmDay(0);
                 if(txtQuestion != null && !"".equals(txtQuestion.getText().toString())){
                     card.setMtxtQuestion(txtQuestion.getText().toString());
-                    check = true;
-                } else if(bitmap != null){
-                    check = true;
-                    card.setMblobQuestion(ImageUtilities.BitmapToBytes(bitmap));
-                } else{
-                    check = false;
                 }
-                if(check ==true&&txtAnswer != null && !"".equals(txtAnswer.getText().toString())){
+                if(bitmap != null){
+                    card.setMblobQuestion(ImageUtilities.BitmapToBytes(bitmap));
+                }
+                if(txtAnswer != null && !"".equals(txtAnswer.getText().toString())){
                     card.setMtxtAnswer(txtAnswer.getText().toString());
                 }
-                if(check){
                     UpdateCardTask mytask = new UpdateCardTask();
                     mytask.execute();
-                }else{
-                    Toast.makeText(context,"update card failed! Answer/Question can't be null",Toast.LENGTH_SHORT).show();
-                }
+
 
             }
         });
