@@ -1,6 +1,7 @@
 package com.memorycard.android.memorycardapp;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -102,7 +103,7 @@ public class CardFragment extends Fragment {
         super.onCreate(savedInstanceState);
         context = getContext();
         dbmanager = DataBaseManager.getDbManager(context);
-
+        setRetainInstance(true);
 /*        if (getArguments() != null) {
             txtQuestion.setText(getArguments().getString(QUESTION));
             txtAnswer.setText(getArguments().getString(ANSWER));
@@ -127,7 +128,9 @@ public class CardFragment extends Fragment {
         }
 
         // Inflate the layout for this fragment
+
         View v = inflater.inflate(R.layout.fragment_card, container, false);
+
         txtAnswer = (EditText)v.findViewById(R.id.card_txt_answer);
         txtQuestion = (TextView)v.findViewById(R.id.card_txt_question);
         Button checkButton = (Button)v.findViewById(R.id.check_button);

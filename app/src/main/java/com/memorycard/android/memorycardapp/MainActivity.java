@@ -1,6 +1,5 @@
 package com.memorycard.android.memorycardapp;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,15 +22,9 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.mikepenz.materialdrawer.model.interfaces.Nameable;
-import com.mikepenz.materialize.util.UIUtils;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 import utilities.CardsFilter;
-import utilities.DataBaseManager;
-import utilities.XmlUtilities;
+
 
 public class MainActivity extends AppCompatActivity {
 

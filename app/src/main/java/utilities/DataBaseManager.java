@@ -507,7 +507,7 @@ public class DataBaseManager {
             ContentValues cv = new ContentValues();
             cv.put("lastmodif_date", cardsGroup.getlLastModifTimeInMillis());
             try {
-                writableDB.update(LIST_TAB, cv, "_id=" + cardsGroup.getmId(), null);
+                writableDB.update(LIST_TAB, cv, "tab_name LIKE ?",new String[]{cardsGroup.getTab_name()});
                 Log.d(TAG, "Updating cardgroup " +
                         cardsGroup.getmId() +
                         " into table " +

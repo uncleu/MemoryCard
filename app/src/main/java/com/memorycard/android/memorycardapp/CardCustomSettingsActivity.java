@@ -76,12 +76,10 @@ public class CardCustomSettingsActivity extends AppCompatActivity{
                 if(txtQuestion != null && !"".equals(txtQuestion.getText().toString())){
                     card.setMtxtQuestion(txtQuestion.getText().toString());
                     check = true;
-                }
-                if(bitmap != null){
+                } else if(bitmap != null){
                     check = true;
                     card.setMblobQuestion(ImageUtilities.BitmapToBytes(bitmap));
-                }
-                else{
+                } else{
                     check = false;
                 }
                 if(check ==true&&txtAnswer != null && !"".equals(txtAnswer.getText().toString())){
@@ -93,8 +91,6 @@ public class CardCustomSettingsActivity extends AppCompatActivity{
                 }else{
                     Toast.makeText(context,"update card failed! Answer/Question can't be null",Toast.LENGTH_SHORT).show();
                 }
-
-
 
             }
         });
