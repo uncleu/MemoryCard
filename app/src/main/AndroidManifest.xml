@@ -21,12 +21,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".CardsGroupLoaderActivity"
-            android:configChanges="keyboardHidden|orientation" />
+            android:configChanges="screenSize|keyboardHidden|orientation" />
         <activity android:name=".CardsManagerActivity"
-            android:configChanges="keyboardHidden|orientation" />
+            android:configChanges="screenSize|keyboardHidden|orientation" />
         <activity android:name=".CardCustomSettingsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".SettingsActivity" android:screenOrientation="portrait"/>
-
+        <activity
+            android:name="com.memorycard.android.memorycard.SettingsActivity"
+            android:label="@string/title_activity_settings" android:screenOrientation="portrait"/>
         <provider
             android:name=".MemoryCardContentProvider"
             android:authorities="com.memorycard.android.memorycardapp"

@@ -73,7 +73,15 @@ public class MainCustomSettingsActivity extends ListActivity implements LoaderMa
             }
         });
 
-
+        Button backButton = (Button)findViewById(R.id.back_to_main_menu_button_in_add_group);
+        backButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
 
         activity.getLoaderManager().initLoader(0, null, this);
         mCallbacks = this;

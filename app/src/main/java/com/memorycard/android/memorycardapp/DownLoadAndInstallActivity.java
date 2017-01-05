@@ -85,7 +85,7 @@ public class DownLoadAndInstallActivity extends AppCompatActivity {
                     //new downloadTask().execute(s);
                     Intent intent = new Intent(DownLoadAndInstallActivity.this, DownLoadService.class);
                     intent.putExtra("getDownloadFileUrl", s);
-                    intent.putExtra("filename", downloadFileName);
+                    intent.putExtra("downloadFileName", downloadFileName);
                     intent.setAction("start");
                     startService(intent);
 
@@ -97,7 +97,7 @@ public class DownLoadAndInstallActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(DownLoadAndInstallActivity.this, DownLoadService.class);
                     intent.putExtra("getDownloadFileUrl", s);
-                    intent.putExtra("filename", downloadFileName);
+                    intent.putExtra("downloadFileName", downloadFileName);
                     intent.setAction("start");
                     startService(intent);
                 }

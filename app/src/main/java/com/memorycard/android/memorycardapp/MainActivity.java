@@ -24,12 +24,14 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import utilities.CardsFilter;
+import utilities.SettingsUtilities;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private Context context;
     private Toolbar toolbar;
+    public static boolean isNoStudyNotify;
 
     public static int day;
 
@@ -128,10 +130,14 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar.setOnMenuItemClickListener(onMenuItemClick);
 
+        isNoStudyNotify = SettingsUtilities.isNoStudyNotify(context);
 
-        Intent intent = new Intent(MainActivity.this, LongTimeNoStudyNotificationService.class);
-        intent.setAction("start");
-        startService(intent);
+        if(isNoStudyNotify){
+            Intent intent = new Intent(MainActivity.this, LongTimeNoStudyNotificationService.class);
+            intent.setAction("start");
+            startService(intent);
+        }
+
     }
 
     @Override

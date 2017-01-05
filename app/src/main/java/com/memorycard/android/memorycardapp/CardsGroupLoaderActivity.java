@@ -186,16 +186,22 @@ public class CardsGroupLoaderActivity extends ListActivity implements LoaderMana
         protected void onPostExecute(ArrayList<CardsGroup> result)
         {
             super.onPostExecute(result);
-            mCardsGroupsList = result;
-            List<String> tmplist = new ArrayList<>();
+                mCardsGroupsList = result;
+                if(result.size() != 0){
+                List<String> tmplist = new ArrayList<>();
 
-            for(CardsGroup cg:result){
-                tmplist.add(cg.getName());
-            }
-            String[] namelist = tmplist.toArray(new String[tmplist.size()]);
-            listView.setAdapter(new ArrayAdapter<>(context, R.layout.cards_group_list_item, R.id.text_view, namelist));
-            indicat.initData(tmplist.size(), 0);
-            indicat.setCurrentPage(0);
+                for(CardsGroup cg:result){
+                    tmplist.add(cg.getName());
+                }
+                String[] namelist = tmplist.toArray(new String[tmplist.size()]);
+                listView.setAdapter(new ArrayAdapter<>(context, R.layout.cards_group_list_item, R.id.text_view, namelist));
+                indicat.initData(tmplist.size(), 0);
+                indicat.setCurrentPage(0);
+            } else{
+                    Intent intent=new Intent(context, MainActivity.class);
+                    startActivity(intent);
+                }
+
         }
     }
 

@@ -19,7 +19,11 @@ public class SettingsUtilities {
         boolean is = prefs.getBoolean("switch_preference_isCount",false);
         return is;
     }
-
+    public static boolean isNoStudyNotify(Context context){
+        SharedPreferences prefs =PreferenceManager.getDefaultSharedPreferences(context);
+        boolean is = prefs.getBoolean("switch_preference_isNotify",false);
+        return is;
+    }
     public static int getStudyFrequency(Context context){
         SharedPreferences prefs =PreferenceManager.getDefaultSharedPreferences(context);
         String sFrq = prefs.getString("frequency_type","4");
