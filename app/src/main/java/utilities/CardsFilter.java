@@ -52,7 +52,7 @@ public class CardsFilter {
         int day = ((currentTime-installTime)/lFrequency)>0?new Long((currentTime-installTime)/lFrequency).intValue():1;
 
 
-        return 1;
+        return day;
 
     }
 
@@ -63,7 +63,7 @@ public class CardsFilter {
             if(isNoStudyTimeExceed(context,cardsGroup)){
                 long lastModif = cardsGroup.getlLastModifTimeInMillis();
                 long currentTime = TimeUtilities.getCurrentTimeInMillies();
-                long diff = currentTime - lastModif;
+                long diff = currentTime - lastModif - 60*60*1000;
                 SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
                 Date date = new Date(diff);
                 String res = cardsGroup.getName()+" : " +formatter.format(date);
@@ -89,7 +89,7 @@ public class CardsFilter {
 
     private static boolean checkCardDisplay(Card card,int day) {
 
-        if((card.getmDay() == day) || card.getmDifficultyScore() != 0){
+        if((card.getmDay() == 1) || (card.getmDay() == day) || card.getmDifficultyScore() != 0){
             return true;
         }
         return  false;
